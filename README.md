@@ -3,16 +3,10 @@
 Cordova plugin for integrating razorpay's payment on mobile. Currently supports android only.
 
 ## Usage:
-Clone the plugin, preferably in parent folder of your existing Cordova project.
-
-    $ git clone https://github.com/pronav/razorpay-cordova.git
-
 Install the plugin
 
     $ cd your-project-folder
-    $ cordova plugin add ../razorpay-cordova
-
-Where `../razorpay-cordova` is plugin's cloned path relative to your cordova folder.
+    $ cordova plugin add https://github.com/pronav/razorpay-cordova.git
 
 Integration code
 
