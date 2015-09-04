@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="com.razorpay.cordova"
+        version="0.1.0">
+
+  <name>RazorpayCheckout</name>
+
+  <engines>
+    <engine name="cordova" version=">=3.4.0"/>
+  </engines>
+
+  <asset src="www/RazorpayCheckout.js" target="js/RazorpayCheckout.js"/>
+
+  <js-module src="www/RazorpayCheckout.js" name="RazorpayCheckout">
+    <clobbers target="RazorpayCheckout" />
+  </js-module>
+  
+  <platform name="android">
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <activity android:name="com.razorpay.CheckoutActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+    </config-file>
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="Checkout">
+        <param name="android-package" value="com.razorpay.cordova.Main"/>
+      </feature>
+    </config-file>
+
+    <source-file src="src/android/Main.java" target-dir="src/com/razorpay/cordova/"/>
+    <source-file src="src/android/Fragment.java" target-dir="src/com/razorpay/cordova/"/>
+    <source-file src="src/android/razorpay-android.jar" target-dir="libs/" />
+  </platform>
+</plugin>
