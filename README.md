@@ -6,9 +6,9 @@ Cordova plugin for integrating razorpay's payment on mobile. Currently supports 
 Install the plugin
 
     $ cd your-project-folder
-    $ cordova plugin add https://github.com/pronav/razorpay-cordova.git
+    $ cordova plugin add https://github.com/razorpay/razorpay-cordova.git
 
-(or, `phonegap plugin add https://github.com/pronav/razorpay-cordova.git`)
+(or, `phonegap plugin add https://github.com/razorpay/razorpay-cordova.git`)
 
 Integration code
 
