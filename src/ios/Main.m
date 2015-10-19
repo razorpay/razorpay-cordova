@@ -1,20 +1,17 @@
 #import "Main.h"
-#include "RazorpayPayment.h"
+#import "RazorpayPayment.h"
 
 @implementation Main
 
 - (void)open:(CDVInvokedUrlCommand*)command
 {
 
-    NSString* callbackId = [command callbackId];
-    NSString* name = [[command arguments] objectAtIndex:0];
-    NSString* msg = [NSString stringWithFormat: @"Hello, %@", name];
-
-    CDVPluginResult* result = [CDVPluginResult
-                               resultWithStatus:CDVCommandStatus_OK
-                               messageAsString:msg];
-
-    [self success:result callbackId:callbackId];
+    NSDictionary * options = [NSJSONSerialization JSONObjectWithData:[[[command arguments] objectAtIndex:0] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+    
+    RazorpayPayment * co = [[RazorpayPayment alloc] initWithKey:@"rzp_test_1DP5mmOlF5G5ag"];
+    co.main = self;
+    co.callbackId = [command callbackId];
+    [co open:options];
 }
 
 @end
