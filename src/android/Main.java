@@ -13,7 +13,9 @@ public class Main extends CordovaPlugin {
     Fragment co = new Fragment();
     co.setCallbackContext(callbackContext);
     try{
-      co.open(this.cordova.getActivity(), new JSONObject(data.getString(0)));
+      JSONObject options = new JSONObject(data.getString(0));
+      co.setPublicKey(options.getString('key'));
+      co.open(this.cordova.getActivity(), options);
     } catch (Exception e){
 
     }
