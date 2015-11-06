@@ -21,7 +21,8 @@ Integration code
         key: 'rzp_test_1DP5mmOlF5G5ag',
         amount: '5000',
         name: 'foo',
-        prefill: {email: 'pranav@razorpay.com', contact: '8879524924', name: 'Pranav Gupta'}
+        prefill: {email: 'pranav@razorpay.com', contact: '8879524924', name: 'Pranav Gupta'},
+        theme: {color: '#F37254'}
     }
 
     var successCallback = function(payment_id) {
