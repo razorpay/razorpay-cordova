@@ -13,4 +13,6 @@
 
 - (nonnull id)initWithKey:(nonnull NSString *) key;
 
+- (void)authorize:(nonnull NSDictionary*) options;
+
 @end
