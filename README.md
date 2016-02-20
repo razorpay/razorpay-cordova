@@ -1,6 +1,6 @@
 # Cordova/Phonegap bindings for Razorpay's Mobile SDKs
 
-Cordova plugin for integrating Razorpay's checkout. Supported platforms are Android and iOS.
+Offcial Cordova/Phonegap plugin for integrating Razorpay's checkout. Supported platforms are Android and iOS.
 
 ## Usage:
 Install the plugin

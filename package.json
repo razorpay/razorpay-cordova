@@ -1,0 +1,28 @@
+{
+  "name": "com.razorpay.cordova",
+  "version": "1.0.0",
+  "description": "Cordova/Phonegap bindings for Razorpay's Mobile SDKs",
+  "main": "Readme.md",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/razorpay/razorpay-cordova.git"
+  },
+  "keywords": [
+    "razorpay",
+    "ecosystem:cordova",
+    "cordova",
+    "phonegap",
+    "ionic",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Pranav Gupta <pranavguptarulz@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/razorpay/razorpay-cordova/issues"
+  },
+  "homepage": "https://github.com/razorpay/razorpay-cordova#readme"
+}
