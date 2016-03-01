@@ -7,12 +7,12 @@
 
 - (void)successHandler:(nonnull NSString*) payment_id;
 
+- (void)setDelegate:(nonnull id)delegate;
+
 - (void)open:(nonnull NSDictionary*) options;
 
 - (void)close;
 
 - (nonnull id)initWithKey:(nonnull NSString *) key;
-
-- (void)authorize:(nonnull NSDictionary*) options;
 
 @end
