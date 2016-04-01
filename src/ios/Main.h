@@ -1,7 +1,10 @@
 #import <Cordova/CDV.h>
+#import <Razorpay/Razorpay.h>
 
 @interface Main : CDVPlugin
 
-- (void) open:(CDVInvokedUrlCommand*)command;
+@property NSString *callbackId;
+
+- (void)open:(CDVInvokedUrlCommand *)command;
 
 @end
