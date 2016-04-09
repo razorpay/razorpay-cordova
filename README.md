@@ -36,4 +36,4 @@ Integration code
     RazorpayCheckout.open(options, successCallback, cancalCallback);
 
 
-Change the options accordingly. Supported options can be find [here](https://docs.razorpay.com/docs/checkout-form#checkout-fields). This code snipette can be added anytime after `deviceready` event.
+Change the options accordingly. Supported options can be found [here](https://docs.razorpay.com/docs/checkout-form#checkout-fields). This code snippet can be added anytime after `deviceready` event.
