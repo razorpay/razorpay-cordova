@@ -6,8 +6,8 @@ Offcial Cordova/Phonegap plugin for integrating Razorpay's checkout. Supported p
 Install the plugin
 
     $ cd your-project-folder
-    $ cordova plugin add android # optional
-    $ cordova plugin add ios     # optional
+    $ cordova platform add android # optional
+    $ cordova platform add ios     # optional
     $ cordova plugin add https://github.com/razorpay/razorpay-cordova.git
 
 (or, `phonegap plugin add https://github.com/razorpay/razorpay-cordova.git`)
