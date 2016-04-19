@@ -29,11 +29,11 @@ Integration code
         alert('payment_id: ' + payment_id);
     }
 
-    var cancalCallback = function(error) {
+    var cancelCallback = function(error) {
         alert(error.description + ' (Error '+error.code+')');
     }
 
-    RazorpayCheckout.open(options, successCallback, cancalCallback);
+    RazorpayCheckout.open(options, successCallback, cancelCallback);
 
 
 Change the options accordingly. Supported options can be found [here](https://docs.razorpay.com/docs/checkout-form#checkout-fields). This code snippet can be added anytime after `deviceready` event.
