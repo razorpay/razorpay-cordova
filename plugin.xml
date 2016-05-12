@@ -44,5 +44,7 @@
       <header-file src="src/ios/Main.h" target-dir="Razorpay"/>
       <source-file src="src/ios/Main.m" target-dir="Razorpay"/>
       <framework src="src/ios/Razorpay.framework" custom="true" />
+      <framework src="CoreTelephony.framework" />
+      <framework src="SystemConfiguration.framework" />
   </platform>
 </plugin>
