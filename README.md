@@ -8,9 +8,11 @@ Install the plugin
     $ cd your-project-folder
     $ cordova platform add android # optional
     $ cordova platform add ios     # optional
-    $ cordova plugin add https://github.com/razorpay/razorpay-cordova.git
+    $ cordova plugin add https://github.com/razorpay/razorpay-cordova.git --save
 
-(or, `phonegap plugin add https://github.com/razorpay/razorpay-cordova.git`)
+(or, `phonegap plugin add https://github.com/razorpay/razorpay-cordova.git --save`)
+
+**Note:** Currently, the plugin works only on the devices and not supported to run on browsers
 
 Integration code
 
