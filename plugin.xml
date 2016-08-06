@@ -47,4 +47,16 @@
       <framework src="CoreTelephony.framework" />
       <framework src="SystemConfiguration.framework" />
   </platform>
+
+  <!-- Browser -->
+  <platform name="browser">
+    <config-file target="config.xml" parent="/*">
+      <feature name="Checkout">
+        <param name="browser-package" value="Checkout" />
+      </feature>
+    </config-file>
+    <js-module src="src/browser/CheckoutProxy.js" name="CheckoutProxy">
+      <runs />
+    </js-module>
+  </platform>
 </plugin>

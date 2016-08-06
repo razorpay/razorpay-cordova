@@ -17,7 +17,8 @@
     "phonegap",
     "ionic",
     "cordova-android",
-    "cordova-ios"
+    "cordova-ios",
+    "cordova-browser"
   ],
   "author": "Pranav Gupta <pranavguptarulz@gmail.com>",
   "license": "ISC",
