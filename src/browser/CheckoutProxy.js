@@ -45,7 +45,7 @@ function normalizeOptions(successCallback, cancelCallback, args) {
   }
 
   options.handler = function(response) {
-    successCallback(response)
+    successCallback(response.razorpay_payment_id)
   }
 
   return options

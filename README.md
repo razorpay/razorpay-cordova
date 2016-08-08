@@ -1,6 +1,6 @@
 # Cordova/Phonegap bindings for Razorpay's Mobile SDKs
 
-Offcial Cordova/Phonegap plugin for integrating Razorpay's checkout.
+Official Cordova/Phonegap plugin for integrating Razorpay's checkout.
 
 ## Supported platforms
 
@@ -44,16 +44,26 @@ var options = {
 }
 
 var successCallback = function(payment_id) {
-  alert('payment_id: ' + payment_id);
+  alert('payment_id: ' + payment_id)
 }
 
 var cancelCallback = function(error) {
-  alert(error.description + ' (Error '+error.code+')');
+  alert(error.description + ' (Error '+error.code+')')
 }
 
-RazorpayCheckout.open(options, successCallback, cancelCallback);
+RazorpayCheckout.open(options, successCallback, cancelCallback)
 
 ```
-**Important Note** This code snippet can be added anytime after `deviceready` event.
 
 Change the options accordingly. Supported options can be found [here](https://docs.razorpay.com/docs/checkout-form#checkout-fields).
+
+### Things to be taken care:
+
+- Add the integration code snippet after `deviceready` event.
+
+- On browser platform, change the [Content Security Policy](https://content-security-policy.com/) to whitelist the `razorpay.com` domain.
+
+```html
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.razorpay.com data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+
+```
