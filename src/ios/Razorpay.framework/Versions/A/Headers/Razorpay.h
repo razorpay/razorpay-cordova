@@ -15,7 +15,10 @@
 + (nonnull instancetype)
       initWithKey:(nonnull NSString *)key
       andDelegate:(nonnull id<RazorpayPaymentCompletionProtocol>)delegate
-forViewController:(nonnull UIViewController *)vc;
+forViewController:(nullable UIViewController *)vc;
++ (nonnull instancetype)
+initWithKey:(nonnull NSString *)key
+andDelegate:(nonnull id<RazorpayPaymentCompletionProtocol>)delegate;
 - (void)open:(nonnull NSDictionary *)options;
 - (void)close;
 
