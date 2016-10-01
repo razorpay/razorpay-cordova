@@ -16,11 +16,8 @@
                  options:0
                    error:nil];
 
-  razorpay = [Razorpay
-            initWithKey:(NSString *)[options objectForKey:@"key"]
-            andDelegate:self
-      forViewController:[[[[UIApplication sharedApplication] delegate] window]
-                            rootViewController]];
+  razorpay = [Razorpay initWithKey:(NSString *)[options objectForKey:@"key"]
+                       andDelegate:self];
 
   self.callbackId = [command callbackId];
   [razorpay open:options];
