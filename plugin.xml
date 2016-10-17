@@ -19,19 +19,16 @@
   </js-module>
 
   <platform name="android">
-    <config-file target="AndroidManifest.xml" parent="/manifest/application">
-      <activity android:name="com.razorpay.CheckoutActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
-    </config-file>
-
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="Checkout">
         <param name="android-package" value="com.razorpay.cordova.Main"/>
       </feature>
     </config-file>
-
+    <config-file target="AndroidManifest.xml" parent="/*">
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    </config-file>
+    <framework src="com.razorpay:checkout:1.0.2"/>
     <source-file src="src/android/Main.java" target-dir="src/com/razorpay/cordova/"/>
-    <source-file src="src/android/Fragment.java" target-dir="src/com/razorpay/cordova/"/>
-    <source-file src="src/android/razorpay-android.jar" target-dir="libs/" />
   </platform>
   <platform name="ios">
 
