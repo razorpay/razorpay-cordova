@@ -1,6 +1,9 @@
 package com.razorpay.cordova;
 
 import com.razorpay.CheckoutActivity;
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultWithDataListener;
+import com.razorpay.PaymentData;
 import org.json.JSONObject;
 import org.apache.cordova.*;
 import org.json.JSONArray;
@@ -11,9 +14,9 @@ import android.content.Intent;
 import android.app.Activity;
 
 
-public class Main extends CordovaPlugin {
-  public static final int RZP_REQUEST_CODE = 72967729;
-  public static final String MAP_KEY_RZP_PAYMENT_ID = "razorpay_payment_id";
+public class Main extends CordovaPlugin  implements PaymentResultWithDataListener {
+  public static final String MAP_KEY_ERROR_CODE = "code";
+  public static final String MAP_KEY_ERROR_DESC = "description";
   public CallbackContext cc;
 
   @Override
@@ -22,7 +25,8 @@ public class Main extends CordovaPlugin {
     try{
       Intent intent = new Intent(this.cordova.getActivity(), CheckoutActivity.class);
       intent.putExtra("OPTIONS", data.getString(0));
-      this.cordova.startActivityForResult((CordovaPlugin)this, intent, RZP_REQUEST_CODE);
+      intent.putExtra("FRAMEWORK", "cordova");
+      this.cordova.startActivityForResult((CordovaPlugin)this, intent, Checkout.RZP_REQUEST_CODE);
     } catch (Exception e){
       Toast.makeText(this.cordova.getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
     }
@@ -31,30 +35,22 @@ public class Main extends CordovaPlugin {
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-      if (requestCode != RZP_REQUEST_CODE) return;
-      String result = null;
-      if(intent != null){
-        Bundle extras = intent.getExtras();
-        if(extras != null){
-          result = extras.getString("RESULT");
-        }
-      }
-      if(resultCode == 1){
-        try {
-          JSONObject successJson = new JSONObject(result);
-          cc.success(successJson.getString(MAP_KEY_RZP_PAYMENT_ID));
-        } catch (Exception e) {}
-      }
-      else{
-        if(resultCode == Activity.RESULT_CANCELED){
-          result = "Payment Cancelled";
-        }
+    Checkout.handleActivityResult(this.cordova.getActivity(), requestCode, resultCode, intent, this);    
+  }
+
+  @Override
+  public void onPaymentSuccess(String razorpayPaymentId, PaymentData paymentData) {
+    cc.success(razorpayPaymentId);
+  } 
+
+  @Override
+  public void onPaymentError(int code, String description, PaymentData paymentData) {
+    try {
         JSONObject error = new JSONObject();
-        try{
-          error.put("code", resultCode);
-          error.put("description", result);
-        } catch(Exception e){}
+        error.put(MAP_KEY_ERROR_CODE, code);
+        error.put(MAP_KEY_ERROR_DESC, description);
         cc.error(error);
-      }
-    }
+    } catch(Exception e){}
+  }
+
 }
