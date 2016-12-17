@@ -8,6 +8,8 @@ Official Cordova/Phonegap plugin for integrating Razorpay's checkout.
 - iOS
 - Browser
 
+You can check out the sample apps for cordova, ionic1 & ionic2 in https://github.com/razorpay/razorpay-cordova-sample-app
+
 ## Usage:
 
 Install the plugin
@@ -67,3 +69,4 @@ Change the options accordingly. Supported options can be found [here](https://do
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.razorpay.com data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
 
 ```
+
