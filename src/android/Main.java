@@ -44,15 +44,15 @@ public class Main extends CordovaPlugin  implements PaymentResultWithDataListene
   @Override
   public void onPaymentSuccess(String razorpayPaymentId, PaymentData paymentData) {
     try {
-      JSONObject success = new JSONObject();
-      success.put(MAP_KEY_PAYMENT_ID, razorpayPaymentId);
+      JSONObject data = new JSONObject();
+      data.put(MAP_KEY_PAYMENT_ID, razorpayPaymentId);
       if(paymentData.getOrderId() != null){
-        success.put(MAP_KEY_ORDER_ID, paymentData.getOrderId());
+        data.put(MAP_KEY_ORDER_ID, paymentData.getOrderId());
       }
       if(paymentData.getSignature() != null){
-        success.put(MAP_KEY_SIGNATURE, paymentData.getSignature());
+        data.put(MAP_KEY_SIGNATURE, paymentData.getSignature());
       }
-      cc.success(razorpayPaymentId);
+      cc.success(data);
     } catch(Exception e){}
   } 
 
