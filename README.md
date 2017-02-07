@@ -45,8 +45,14 @@ var options = {
   }
 }
 
-var successCallback = function(payment_id) {
-  alert('payment_id: ' + payment_id)
+var successCallback = function(success) {
+  alert('payment_id: ' + success.payment_id)
+  /**
+   * If you are using our Orders API you can
+   * retrieve the signature and order id here 
+   */
+  var order_id = success.order_id;
+  var signature = success.signature; 
 }
 
 var cancelCallback = function(error) {
