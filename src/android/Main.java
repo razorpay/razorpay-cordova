@@ -18,9 +18,6 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
   public static final String MAP_KEY_ERROR_CODE = "code";
   public static final String MAP_KEY_ERROR_DESC = "description";
   public static final String MAP_KEY_ERROR_DATA = "error_data";
-  public static final String MAP_KEY_PAYMENT_ID = "payment_id";
-  public static final String MAP_KEY_ORDER_ID = "order_id";
-  public static final String MAP_KEY_SIGNATURE = "signature";
   private String userAction;
   public CallbackContext cc;
 
@@ -47,17 +44,7 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
   @Override
   public void onPaymentSuccess(String razorpayPaymentId, PaymentData paymentData) {
     if (this.userAction.equalsIgnoreCase("open")) {
-      try {
-        JSONObject data = new JSONObject();
-        data.put(MAP_KEY_PAYMENT_ID, razorpayPaymentId);
-        if(paymentData.getOrderId() != null){
-          data.put(MAP_KEY_ORDER_ID, paymentData.getOrderId());
-        }
-        if(paymentData.getSignature() != null){
-          data.put(MAP_KEY_SIGNATURE, paymentData.getSignature());
-        }
-        cc.success(data);
-      } catch(Exception e){}
+        cc.success(paymentData.getData());
     }
   }
 
