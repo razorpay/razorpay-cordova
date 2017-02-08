@@ -19,11 +19,11 @@ cd your-project-folder
 cordova platform add android      # optional
 cordova platform add ios          # optional
 cordova platform add browser      # optional
-cordova plugin add https://github.com/razorpay/razorpay-cordova.git --save
+cordova plugin add com.razorpay.cordova --save
 
 ```
 
-(or, `phonegap plugin add https://github.com/razorpay/razorpay-cordova.git --save`)
+(or, `phonegap plugin add com.razorpay.cordova --save`)
 
 ## Integration code
 
