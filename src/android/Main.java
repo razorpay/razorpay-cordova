@@ -47,8 +47,6 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
   @Override
   public void onPaymentSuccess(String razorpayPaymentId, PaymentData paymentData) {
     if (this.userAction.equalsIgnoreCase("open")) {
-      cc.success(razorpayPaymentId);
-    } else if (this.userAction.equalsIgnoreCase("openWithAdditionalData")) {
       try {
         JSONObject data = new JSONObject();
         data.put(MAP_KEY_PAYMENT_ID, razorpayPaymentId);
@@ -66,13 +64,6 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
   @Override
   public void onPaymentError(int code, String description, PaymentData paymentData) {
     if (this.userAction.equalsIgnoreCase("open")) {
-      try {
-          JSONObject error = new JSONObject();
-          error.put(MAP_KEY_ERROR_CODE, code);
-          error.put(MAP_KEY_ERROR_DESC, description);
-          cc.error(error);
-      } catch(Exception e){}
-    } else if (this.userAction.equalsIgnoreCase("openWithAdditionalData")) {
       try {
           JSONObject error = new JSONObject();
           error.put(MAP_KEY_ERROR_CODE, code);
