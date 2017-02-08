@@ -1,6 +1,6 @@
 #import "Main.h"
 
-@interface Main () <RazorpayPaymentCompletionProtocol> {
+@interface Main () <RazorpayPaymentCompletionProtocolWithData> {
   Razorpay *razorpay;
 }
 
@@ -17,25 +17,29 @@
                    error:nil];
 
   razorpay = [Razorpay initWithKey:(NSString *)[options objectForKey:@"key"]
-                       andDelegate:self];
+               andDelegateWithData:self];
 
   self.callbackId = [command callbackId];
   [razorpay open:options];
 }
 
-- (void)onPaymentError:(int)code description:(nonnull NSString *)str {
+- (void)onPaymentError:(int)code
+           description:(nonnull NSString *)str
+               andData:(nullable NSDictionary *)response {
   CDVPluginResult *result = [CDVPluginResult
          resultWithStatus:CDVCommandStatus_ERROR
       messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
                                             [NSNumber numberWithInt:code],
-                                            @"code", str, @"description", nil]];
+                                            @"code", str, @"description",
+                                            response, @"response", nil]];
   [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
 }
 
-- (void)onPaymentSuccess:(nonnull NSString *)payment_id {
+- (void)onPaymentSuccess:(nonnull NSString *)payment_id
+                 andData:(nullable NSDictionary *)response {
   CDVPluginResult *result =
       [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                        messageAsString:payment_id];
+                    messageAsDictionary:response];
   [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
 }
 

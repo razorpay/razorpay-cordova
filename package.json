@@ -1,6 +1,6 @@
 {
   "name": "com.razorpay.cordova",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Cordova/Phonegap bindings for Razorpay's Mobile SDKs",
   "main": "Readme.md",
   "scripts": {
@@ -20,7 +20,7 @@
     "cordova-ios",
     "cordova-browser"
   ],
-  "author": "Pranav Gupta <pranavguptarulz@gmail.com>",
+  "author": "Razorpay Developers <developers@razorpay.com> (https://razorpay.com/)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/razorpay/razorpay-cordova/issues"

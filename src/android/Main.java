@@ -14,14 +14,17 @@ import android.content.Intent;
 import android.app.Activity;
 
 
-public class Main extends CordovaPlugin  implements PaymentResultWithDataListener {
+public class Main extends CordovaPlugin implements PaymentResultWithDataListener {
   public static final String MAP_KEY_ERROR_CODE = "code";
   public static final String MAP_KEY_ERROR_DESC = "description";
+  public static final String MAP_KEY_ERROR_DATA = "error_data";
+  private String userAction;
   public CallbackContext cc;
 
   @Override
   public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
     this.cc = callbackContext;
+    this.userAction = action;
     try{
       Intent intent = new Intent(this.cordova.getActivity(), CheckoutActivity.class);
       intent.putExtra("OPTIONS", data.getString(0));
@@ -35,22 +38,28 @@ public class Main extends CordovaPlugin  implements PaymentResultWithDataListene
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    Checkout.handleActivityResult(this.cordova.getActivity(), requestCode, resultCode, intent, this);    
+    Checkout.handleActivityResult(this.cordova.getActivity(), requestCode, resultCode, intent, this);
   }
 
   @Override
   public void onPaymentSuccess(String razorpayPaymentId, PaymentData paymentData) {
-    cc.success(razorpayPaymentId);
-  } 
+    if (this.userAction.equalsIgnoreCase("open")) {
+        cc.success(paymentData.getData());
+    }
+  }
 
   @Override
   public void onPaymentError(int code, String description, PaymentData paymentData) {
-    try {
-        JSONObject error = new JSONObject();
-        error.put(MAP_KEY_ERROR_CODE, code);
-        error.put(MAP_KEY_ERROR_DESC, description);
-        cc.error(error);
-    } catch(Exception e){}
+    if (this.userAction.equalsIgnoreCase("open")) {
+      try {
+          JSONObject error = new JSONObject();
+          error.put(MAP_KEY_ERROR_CODE, code);
+          error.put(MAP_KEY_ERROR_DESC, description);
+          if (paymentData.getData() != null) {
+            error.put(MAP_KEY_ERROR_DATA, paymentData.getData());
+          }
+          cc.error(error);
+      } catch(Exception e){}
+    }
   }
-
 }
