@@ -96,7 +96,8 @@ RazorpayCheckout.on('payment.cancel', cancelCallback)
 RazorpayCheckout.open(options)
 ```
 ### Android Lifecycle Guide 
-It is recomended that you read [this](https://cordova.apache.org/docs/en/latest/guide/platforms/android/#lifecycle-guide) first before proceeding with this section
+***It is recomended that you read [this](https://cordova.apache.org/docs/en/latest/guide/platforms/android/#lifecycle-guide) first before proceeding with this section***
+
 Since our plugin launches a new activity on Android, the cordova activity goes in the background
 and might get destroyed by the Android System. For this scenario, you need to add the following code to make sure the 
 payment result is delivered after the cordova activity is recreated:
