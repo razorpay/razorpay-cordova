@@ -36,6 +36,20 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
     return true;
   }
 
+  public Bundle onSaveInstanceState() {
+    Bundle bundle = new Bundle();
+    bundle.putString("action", this.userAction);
+    return bundle;
+  }
+
+  @Override 
+  public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext) {
+      if(state != null){
+        this.userAction = state.getString("action");
+      }
+      this.cc = callbackContext;
+  }
+
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     Checkout.handleActivityResult(this.cordova.getActivity(), requestCode, resultCode, intent, this);
