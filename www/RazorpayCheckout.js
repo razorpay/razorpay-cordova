@@ -29,5 +29,16 @@ module.exports = {
       if (typeof event === 'string' && typeof callback === 'function') {
         this.callbacks[event] = callback;
       }
+    },
+
+    onResume: function(event) {
+      if(event.pendingResult && event.pendingResult.pluginServiceName === 'Checkout'){
+        if(event.pendingResult.pluginStatus === "OK") {
+            this.callbacks['payment.success'](event.pendingResult.result);
+        } 
+        else {
+            this.callbacks['payment.cancel'](event.pendingResult.result);
+        }
+      }
     }
 };

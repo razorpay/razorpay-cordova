@@ -95,7 +95,25 @@ RazorpayCheckout.on('payment.success', successCallback)
 RazorpayCheckout.on('payment.cancel', cancelCallback)
 RazorpayCheckout.open(options)
 ```
+### Android Lifecycle Guide 
+***It is recomended that you read [this](https://cordova.apache.org/docs/en/latest/guide/platforms/android/#lifecycle-guide) first before proceeding with this section***
 
+Since our plugin launches a new activity on Android, the cordova activity goes in the background
+and might get destroyed by the Android System. For this scenario, you need to add the following code to make sure the 
+payment result is delivered after the cordova activity is recreated:
+```
+// You need to register an event listener for the `resume` event
+document.addEventListener('resume', onResume, false);
+var onResume = function(event) {
+        // Re-register the payment success and cancel callbacks
+        RazorpayCheckout.on('payment.success', successCallback)
+        RazorpayCheckout.on('payment.cancel', cancelCallback)
+        // Pass on the event to RazorpayCheckout
+        RazorpayCheckout.onResume(event);
+      };
+
+
+```
 ### Things to be taken care:
 
 - Add the integration code snippet after `deviceready` event.
