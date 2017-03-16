@@ -32,7 +32,7 @@ module.exports = {
     },
 
     onResume: function(event) {
-      if(event.pendingResult){
+      if(event.pendingResult && event.pendingResult.pluginServiceName === 'Checkout'){
         if(event.pendingResult.pluginStatus === "OK") {
             this.callbacks['payment.success'](event.pendingResult.result);
         } 
