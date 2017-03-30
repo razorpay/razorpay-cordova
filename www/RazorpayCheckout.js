@@ -13,14 +13,26 @@ module.exports = {
       }
 
       cordova.exec(
-        this.callbacks['payment.success'],
-        this.callbacks['payment.cancel'],
+        this.pluginCallback,
+        this.pluginCallback,
         'Checkout',
         'open',
         [
           JSON.stringify(options)
         ]
       );
+    },
+
+    pluginCallback: function(response){
+      if(response.razorpay_payment_id){
+        callbacks['payment.success'](response);
+      }
+      else if(response.external_wallet_name){
+        callbacks['payment.external_wallet_name'](response);
+      }
+      else if(response.code){
+        callbacks['payment.cancel'](response);
+      }
     },
 
     callbacks: {},
@@ -33,12 +45,7 @@ module.exports = {
 
     onResume: function(event) {
       if(event.pendingResult && event.pendingResult.pluginServiceName === 'Checkout'){
-        if(event.pendingResult.pluginStatus === "OK") {
-            this.callbacks['payment.success'](event.pendingResult.result);
-        } 
-        else {
-            this.callbacks['payment.cancel'](event.pendingResult.result);
-        }
+        this.pluginCallback(event.pendingResult.result);
       }
     }
 };
