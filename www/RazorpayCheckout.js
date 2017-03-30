@@ -28,7 +28,7 @@ module.exports = {
         callbacks['payment.success'](response);
       }
       else if(response.external_wallet_name){
-        callbacks['payment.external_wallet_name'](response);
+        callbacks['payment.external_wallet'](response);
       }
       else if(response.code){
         callbacks['payment.cancel'](response);
