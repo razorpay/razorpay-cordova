@@ -24,13 +24,13 @@ var RazorpayCheckout = module.exports = {
     },
 
     pluginCallback: function(response){
-      if(response.razorpay_payment_id){
+      if('razorpay_payment_id' in response){
         RazorpayCheckout.callbacks['payment.success'](response);
       }
-      else if(response.external_wallet_name){
+      else if('external_wallet_name' in response){
         RazorpayCheckout.callbacks['payment.external_wallet'](response);
       }
-      else if(response.code){
+      else if('code' in response){
         RazorpayCheckout.callbacks['payment.cancel'](response);
       }
     },
