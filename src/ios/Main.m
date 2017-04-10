@@ -1,6 +1,6 @@
 #import "Main.h"
 
-@interface Main () <RazorpayPaymentCompletionProtocolWithData> {
+@interface Main () <RazorpayPaymentCompletionProtocolWithData, ExternalWalletSelectionProtocol> {
   Razorpay *razorpay;
 }
 
@@ -18,6 +18,7 @@
 
   razorpay = [Razorpay initWithKey:(NSString *)[options objectForKey:@"key"]
                andDelegateWithData:self];
+  [razorpay setExternalWalletSelectionDelegate:self];
 
   self.callbackId = [command callbackId];
   [razorpay open:options];
@@ -40,6 +41,17 @@
   CDVPluginResult *result =
       [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                     messageAsDictionary:response];
+  [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
+}
+
+- (void)onExternalWalletSelected:(nonnull NSString *)walletName
+                 WithPaymentData:(nullable NSDictionary *)paymentData {
+  CDVPluginResult *result = [CDVPluginResult
+         resultWithStatus:CDVCommandStatus_ERROR
+      messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
+                                            walletName, @"external_wallet_name",
+                                            paymentData[@"contact"], @"contact",
+                                            paymentData[@"email"], @"email", nil]];
   [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
 }
 
