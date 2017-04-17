@@ -95,6 +95,30 @@ RazorpayCheckout.on('payment.success', successCallback)
 RazorpayCheckout.on('payment.cancel', cancelCallback)
 RazorpayCheckout.open(options)
 ```
+
+### External Wallets
+We also support **displaying** wallets like Citrus and Paytm, which are currently not a part of the standard Razorpay offering. After the user chooses which one of these they want, control is handed back to you with data like wallet name, contact and email of the user. This helps you take the next steps towards facilitating the payment and Razorpay's role in that payment cycle ends there.
+
+To add a wallet, change the `options` JSON as follows:
+```js
+var options = {
+  currency: 'INR',
+  key: 'rzp_test_1DP5mmOlF5G5ag',
+  amount: '5000',
+  external: {
+    wallets: ['paytm']
+  },
+  ...
+  ...
+  ...
+}
+```
+
+To get callback for this, add this before calling `open`:
+```js
+RazorpayCheckout.on('payment.external_wallet', externalWalletCallback)
+```
+
 ### Android Lifecycle Guide 
 ***It is recomended that you read [this](https://cordova.apache.org/docs/en/latest/guide/platforms/android/#lifecycle-guide) first before proceeding with this section***
 

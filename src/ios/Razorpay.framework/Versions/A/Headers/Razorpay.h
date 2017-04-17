@@ -6,6 +6,7 @@
 //  Copyright © 2016 Razorpay. All rights reserved.
 //
 
+#import "ExternalWalletSelectionProtocol.h"
 #import "RazorpayPaymentCompletionProtocol.h"
 #import "RazorpayPaymentCompletionProtocolWithData.h"
 #import <Foundation/Foundation.h>
@@ -28,6 +29,8 @@ andDelegate:(nonnull id<RazorpayPaymentCompletionProtocol>)delegate;
                 andDelegateWithData:
                     (nonnull id<RazorpayPaymentCompletionProtocolWithData>)
                         delegate;
+- (void)setExternalWalletSelectionDelegate:
+    (nonnull id<ExternalWalletSelectionProtocol>)walletDelegate;
 - (void)open:(nonnull NSDictionary *)options;
 - (void)close;
 

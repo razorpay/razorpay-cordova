@@ -1,20 +1,20 @@
 /*global cordova, module*/
 
-module.exports = {
+var RazorpayCheckout = module.exports = {
     open: function (options, successCallback, errorCallback) {
       if (successCallback) {
-        this.callbacks['payment.success'] = function(response) {
+        RazorpayCheckout.callbacks['payment.success'] = function(response) {
           successCallback(response.razorpay_payment_id);
         }
       }
 
       if (errorCallback) {
-        this.callbacks['payment.cancel'] = errorCallback;
+        RazorpayCheckout.callbacks['payment.cancel'] = errorCallback;
       }
 
       cordova.exec(
-        this.callbacks['payment.success'],
-        this.callbacks['payment.cancel'],
+        RazorpayCheckout.pluginCallback,
+        RazorpayCheckout.pluginCallback,
         'Checkout',
         'open',
         [
@@ -23,22 +23,29 @@ module.exports = {
       );
     },
 
+    pluginCallback: function(response){
+      if('razorpay_payment_id' in response){
+        RazorpayCheckout.callbacks['payment.success'](response);
+      }
+      else if('external_wallet_name' in response){
+        RazorpayCheckout.callbacks['payment.external_wallet'](response);
+      }
+      else if('code' in response){
+        RazorpayCheckout.callbacks['payment.cancel'](response);
+      }
+    },
+
     callbacks: {},
 
     on: function(event, callback) {
       if (typeof event === 'string' && typeof callback === 'function') {
-        this.callbacks[event] = callback;
+        RazorpayCheckout.callbacks[event] = callback;
       }
     },
 
     onResume: function(event) {
       if(event.pendingResult && event.pendingResult.pluginServiceName === 'Checkout'){
-        if(event.pendingResult.pluginStatus === "OK") {
-            this.callbacks['payment.success'](event.pendingResult.result);
-        } 
-        else {
-            this.callbacks['payment.cancel'](event.pendingResult.result);
-        }
+        RazorpayCheckout.pluginCallback(event.pendingResult.result);
       }
     }
 };

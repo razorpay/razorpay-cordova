@@ -3,6 +3,7 @@ package com.razorpay.cordova;
 import com.razorpay.CheckoutActivity;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultWithDataListener;
+import com.razorpay.ExternalWalletListener;
 import com.razorpay.PaymentData;
 import org.json.JSONObject;
 import org.apache.cordova.*;
@@ -14,10 +15,13 @@ import android.content.Intent;
 import android.app.Activity;
 
 
-public class Main extends CordovaPlugin implements PaymentResultWithDataListener {
+public class Main extends CordovaPlugin implements PaymentResultWithDataListener, ExternalWalletListener {
   public static final String MAP_KEY_ERROR_CODE = "code";
   public static final String MAP_KEY_ERROR_DESC = "description";
-  public static final String MAP_KEY_ERROR_DATA = "error_data";
+  public static final String MAP_KEY_CONTACT = "contact";
+  public static final String MAP_KEY_EMAIL = "email";
+  public static final String MAP_KEY_EXTERNAL_WALLET_NAME = "external_wallet_name";
+
   private String userAction;
   public CallbackContext cc;
 
@@ -52,7 +56,7 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    Checkout.handleActivityResult(this.cordova.getActivity(), requestCode, resultCode, intent, this);
+    Checkout.handleActivityResult(this.cordova.getActivity(), requestCode, resultCode, intent, this, this);
   }
 
   @Override
@@ -69,10 +73,22 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
           JSONObject error = new JSONObject();
           error.put(MAP_KEY_ERROR_CODE, code);
           error.put(MAP_KEY_ERROR_DESC, description);
-          if (paymentData.getData() != null) {
-            error.put(MAP_KEY_ERROR_DATA, paymentData.getData());
-          }
+          error.put(MAP_KEY_CONTACT, paymentData.getUserContact());
+          error.put(MAP_KEY_EMAIL, paymentData.getUserEmail());
           cc.error(error);
+      } catch(Exception e){}
+    }
+  }
+
+  @Override
+  public void onExternalWalletSelected(String name, PaymentData paymentData) {
+    if (this.userAction.equalsIgnoreCase("open")) {
+      try {
+          JSONObject response = new JSONObject();
+          response.put(MAP_KEY_EXTERNAL_WALLET_NAME, name);
+          response.put(MAP_KEY_EMAIL, paymentData.getUserEmail());
+          response.put(MAP_KEY_CONTACT, paymentData.getUserContact());
+          cc.error(response);
       } catch(Exception e){}
     }
   }
