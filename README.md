@@ -27,37 +27,6 @@ cordova plugin add com.razorpay.cordova --save
 
 ## Integration code
 
-```js
-var options = {
-  description: 'Credits towards consultation',
-  image: 'https://i.imgur.com/3g7nmJC.png',
-  currency: 'INR',
-  key: 'rzp_test_1DP5mmOlF5G5ag',
-  amount: '5000',
-  name: 'foo',
-  prefill: {
-    email: 'pranav@razorpay.com',
-    contact: '8879524924',
-    name: 'Pranav Gupta'
-  },
-  theme: {
-    color: '#F37254'
-  }
-}
-
-var successCallback = function(payment_id) {
-  alert('payment_id: ' + payment_id)
-}
-
-var cancelCallback = function(error) {
-  alert(error.description + ' (Error '+error.code+')')
-}
-
-RazorpayCheckout.open(options, successCallback, cancelCallback)
-```
-
-Change the options accordingly. Supported options can be found [here](https://docs.razorpay.com/docs/checkout-form#checkout-fields).
-
 ### Orders API Flow
 
 With the advent of `auto-capture` using [Order API](https://docs.razorpay.com/v1/page/orders), the integration needs to change a little ([only if you are using this flow](https://docs.razorpay.com/v1/page/orders#auto-capturing-payment)). The only change is that the callbacks have to be added as events. Here is a code sample:
@@ -96,6 +65,8 @@ RazorpayCheckout.on('payment.cancel', cancelCallback)
 RazorpayCheckout.open(options)
 ```
 
+Change the options accordingly. Supported options can be found [here](https://docs.razorpay.com/docs/checkout-form#checkout-fields).
+
 ### External Wallets
 We also support **displaying** wallets like Citrus and Paytm, which are currently not a part of the standard Razorpay offering. After the user chooses which one of these they want, control is handed back to you with data like wallet name, contact and email of the user. This helps you take the next steps towards facilitating the payment and Razorpay's role in that payment cycle ends there.
 
@@ -119,7 +90,40 @@ To get callback for this, add this before calling `open`:
 RazorpayCheckout.on('payment.external_wallet', externalWalletCallback)
 ```
 
-### Android Lifecycle Guide 
+### Legacy
+
+This is legacy integration code and we will continue to support it till further notice. Your server needs to send capture request in this scenario, after the payment is completed.
+
+```js
+var options = {
+  description: 'Credits towards consultation',
+  image: 'https://i.imgur.com/3g7nmJC.png',
+  currency: 'INR',
+  key: 'rzp_test_1DP5mmOlF5G5ag',
+  amount: '5000',
+  name: 'foo',
+  prefill: {
+    email: 'pranav@razorpay.com',
+    contact: '8879524924',
+    name: 'Pranav Gupta'
+  },
+  theme: {
+    color: '#F37254'
+  }
+}
+
+var successCallback = function(payment_id) {
+  alert('payment_id: ' + payment_id)
+}
+
+var cancelCallback = function(error) {
+  alert(error.description + ' (Error '+error.code+')')
+}
+
+RazorpayCheckout.open(options, successCallback, cancelCallback)
+```
+
+## Android Lifecycle Guide 
 ***It is recomended that you read [this](https://cordova.apache.org/docs/en/latest/guide/platforms/android/#lifecycle-guide) first before proceeding with this section***
 
 Since our plugin launches a new activity on Android, the cordova activity goes in the background
@@ -138,7 +142,8 @@ var onResume = function(event) {
 
 
 ```
-### Things to be taken care:
+
+## Things to be taken care:
 
 - Add the integration code snippet after `deviceready` event.
 
@@ -148,3 +153,5 @@ var onResume = function(event) {
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.razorpay.com data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
 
 ```
+
+- Due to the way ionic works, we can't support `ionic serve` at the moment. Try using `ionic run browser` instead of `ionic serve`. `ionic serve` doesn't support cordova browser plugins at the moment. See [driftyco/ionic-cli#354](https://github.com/driftyco/ionic-cli/issues/354).
