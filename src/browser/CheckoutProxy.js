@@ -48,7 +48,7 @@ function normalizeOptions(successCallback, cancelCallback, args) {
     successCallback(response)
   }
 
-  if (options.external.wallets.length) {
+  if (options.external && options.external.wallets && options.external.wallets.length) {
     options.external.handler = function(response) {
       response.external_wallet_name = response.wallet
       cancelCallback(response)
