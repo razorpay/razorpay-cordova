@@ -4,7 +4,8 @@
   "description": "Cordova/Phonegap bindings for Razorpay's Mobile SDKs",
   "main": "Readme.md",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "sh scripts/download_ios_framework.sh"
   },
   "repository": {
     "type": "git",
