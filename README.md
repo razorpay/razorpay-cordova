@@ -14,6 +14,8 @@ You can check out the sample apps for cordova, ionic1 & ionic2 in https://github
 
 Install the plugin
 
+**Note**: For Windows users, please run this on Git Bash instead of Command Prompt. You can download Git for Windows [here](https://github.com/git-for-windows/git/releases/latest).
+
 ```bash
 cd your-project-folder
 cordova platform add android      # optional
