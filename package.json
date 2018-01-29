@@ -1,11 +1,10 @@
 {
   "name": "com.razorpay.cordova",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Cordova/Phonegap bindings for Razorpay's Mobile SDKs",
   "main": "Readme.md",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "sh scripts/download_ios_framework.sh"
+    "postinstall": "node -e \"process.platform !== 'win32' && require('child_process').execSync('sh scripts/download_ios_framework.sh')\""
   },
   "repository": {
     "type": "git",
