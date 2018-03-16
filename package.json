@@ -1,6 +1,6 @@
 {
   "name": "com.razorpay.cordova",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "Cordova/Phonegap bindings for Razorpay's Mobile SDKs",
   "main": "Readme.md",
   "scripts": {
