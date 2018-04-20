@@ -29,6 +29,10 @@ cordova plugin add com.razorpay.cordova --save
 
 ## Integration code
 
+### iOS Note:-
+
+If you face a library not found error , please make sure that you have added Razorpay.framework in your Embedded Binaries phase and also that you have set Always Embed Swift Standard Libraries in the build settings of your main target.
+
 ### Orders API Flow
 
 With the advent of `auto-capture` using [Order API](https://docs.razorpay.com/v1/page/orders), the integration needs to change a little ([only if you are using this flow](https://docs.razorpay.com/v1/page/orders#auto-capturing-payment)). The only change is that the callbacks have to be added as events. Here is a code sample:
