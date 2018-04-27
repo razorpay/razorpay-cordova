@@ -21,7 +21,7 @@ cd your-project-folder
 cordova platform add android      # optional
 cordova platform add ios          # optional
 cordova platform add browser      # optional
-cordova plugin add com.razorpay.cordova --save
+cordova plugin add com.razorpay.cordova@1.3.6 --save
 
 ```
 
