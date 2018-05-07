@@ -21,7 +21,7 @@ cd your-project-folder
 cordova platform add android      # optional
 cordova platform add ios          # optional
 cordova platform add browser      # optional
-cordova plugin add com.razorpay.cordova@1.3.6 --save
+cordova plugin add com.razorpay.cordova --save
 
 ```
 **Note**: This release contains a module map embedded in the framework which by default considers that your Xcode is named Xcode.app.If your Xcode is named differently please copy the script added in the scripts/ , paste it and run it in the folder containing the razorpay framework.
