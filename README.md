@@ -24,6 +24,19 @@ cordova platform add browser      # optional
 cordova plugin add com.razorpay.cordova --save
 
 ```
+**Note**:
+
+This release contains a module map embedded in the framework which by default considers that your Xcode is named Xcode.app.If your Xcode is named differently please copy the script SelectDefaultXcode.sh added in the scripts/ , paste it and run it in the folder containing the razorpay framework.
+
+For eg:
+
+if the razorpay framework is in /plugins/com.razorpay.cordova/src/ios/Razorpay.framework 
+
+ios/Razorpay.framework
+
+paste the script in  /plugins/com.razorpay.cordova/src/ios/
+
+and run the scipt , it will perform the required changes to the module map in the framework , you can then copy it and use it like before.
 
 (or, `phonegap plugin add com.razorpay.cordova --save`)
 
