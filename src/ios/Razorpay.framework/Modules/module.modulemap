@@ -7,7 +7,6 @@ framework module Razorpay {
 
 module Razorpay.Swift {
     header "Razorpay-Swift.h"
-    requires objc
 }
 
 module RazorpayCommonCrypto [system] {
