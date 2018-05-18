@@ -24,6 +24,11 @@ cordova platform add browser      # optional
 cordova plugin add com.razorpay.cordova --save
 
 ```
+
+**Note**: This release is meant for Xcode 9.3 as it uses a framework compiled in Swift 4.1.This will not work in Xcode 9.2 as you will get a "dlyd error : framework not found error".In case you are using an older version of Xcode and need Swift 3.1 visit the following link and download the respective framework.
+
+https://razorpay.com/docs/ios/
+
 **Note**: This release contains a module map embedded in the framework which by default considers that your Xcode is named Xcode.app.If your Xcode is named differently please copy the script added in the scripts/ , paste it and run it in the folder containing the razorpay framework.
 
 For eg:
