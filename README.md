@@ -31,6 +31,8 @@ https://razorpay.com/docs/ios/
 
 **Note**: This release contains a module map embedded in the framework which by default considers that your Xcode is named Xcode.app.If your Xcode is named differently please copy the script added in the scripts/ , paste it and run it in the folder containing the razorpay framework.
 
+**Note**: The iOS framework is shipped with simulator architectures , you have to remove them before you archive, just google  stripping simulator architectures and follow the steps.Also remember to enable bitcode on both your iOS project as well as the RazorpayCheckout project.
+
 For eg:
 
 if the path of the razorpay framework is 
