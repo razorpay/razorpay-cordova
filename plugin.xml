@@ -28,7 +28,7 @@
     <config-file target="AndroidManifest.xml" parent="/*">
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     </config-file>
-    <framework src="com.razorpay:checkout:1.4.8"/>
+    <framework src="com.razorpay:checkout:1.4.9"/>
     <source-file src="src/android/Main.java" target-dir="src/com/razorpay/cordova/"/>
   </platform>
 
