@@ -24,24 +24,11 @@ cordova platform add browser      # optional
 cordova plugin add com.razorpay.cordova --save
 
 ```
+**Note**: We no longer support Swift 3 , moving forward only the latest version of our swift will be supported.
 
-**Note**: This release is meant for Xcode 9.3 and above as it uses a framework compiled in Swift 4.1.This will not work in Xcode 9.2 as you will get a "dlyd error : framework not found error".In case you are using an older version of Xcode and need Swift 3.1 visit the following link and download the respective framework.Also make sure that you set Always Embed Swift Standard Libraries of your main target to yes.
-
-https://razorpay.com/docs/ios/
-
-**Note**: This release contains a module map embedded in the framework which by default considers that your Xcode is named Xcode.app.If your Xcode is named differently please copy the script added in the scripts/ , paste it and run it in the folder containing the razorpay framework.
+**Note**: This release is meant for Xcode 10 and above as it uses a framework compiled in Swift 4.2.Also make sure that you set Always Embed Swift Standard Libraries of your main target to yes.
 
 **Note**: The iOS framework is shipped with simulator architectures , you have to remove them before you archive, just google  stripping simulator architectures and follow the steps.Also remember to enable bitcode on both your iOS project as well as the RazorpayCheckout project.
-
-For eg:
-
-if the path of the razorpay framework is 
-
-/razorpay-cordova/src/ios/Razorpay.framework
-
-paste the script in /razorpay-cordova/src/ios/
-
-and run the scipt , it will perform the required changes to the module map in the framework , you can then copy it and use it like before.
 
 (or, `phonegap plugin add com.razorpay.cordova --save`)
 
