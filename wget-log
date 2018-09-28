@@ -1,0 +1,9 @@
+--2018-08-20 15:10:30--  https://rzp-mobile.s3.amazonaws.com/ios/checkout/1.0.22/RazorpayBitcodeX9.framework.zip
+Resolving rzp-mobile.s3.amazonaws.com (rzp-mobile.s3.amazonaws.com)... 52.216.164.187
+Connecting to rzp-mobile.s3.amazonaws.com (rzp-mobile.s3.amazonaws.com)|52.216.164.187|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5824660 (5.6M) [application/zip]
+Saving to: 'RazorpayBitcodeX9.framework.zip'
+
+RazorpayBitcodeX9.f  12%[=>                  ] 730.64K  2.97KB/s    in 2m 7s   
+
