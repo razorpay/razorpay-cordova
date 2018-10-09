@@ -51,7 +51,7 @@ var options = {
   image: 'https://i.imgur.com/3g7nmJC.png',
   currency: 'INR',
   key: 'rzp_test_1DP5mmOlF5G5ag',
-  order_id: 'order_7HtFNLS98dSj8x'
+  order_id: 'order_7HtFNLS98dSj8x',
   amount: '5000',
   name: 'foo',
   prefill: {
