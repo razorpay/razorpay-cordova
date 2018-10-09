@@ -24,13 +24,20 @@ cordova platform add browser      # optional
 cordova plugin add com.razorpay.cordova --save
 
 ```
+(or, `phonegap plugin add com.razorpay.cordova --save`)
+
 **Note**: We no longer support Swift 3 , moving forward only the latest version of our swift will be supported.
 
 **Note**: This release is meant for Xcode 10 and above as it uses a framework compiled in Swift 4.2.Also make sure that you set Always Embed Swift Standard Libraries of your main target to yes.
 
 **Note**: The iOS framework is shipped with simulator architectures , you have to remove them before you archive, just google  stripping simulator architectures and follow the steps.Also remember to enable bitcode on both your iOS project as well as the RazorpayCheckout project.
 
-(or, `phonegap plugin add com.razorpay.cordova --save`)
+**Note**:
+Please add the line 
+```
+# import <Razorpay/Razorpay-Swift.h>
+```
+to the top of your Main.m file
 
 ## Integration code
 
