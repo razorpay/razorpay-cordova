@@ -39,9 +39,9 @@ git checkout -b r/v"$CORDOVA_NEW_RELEASE_VERSION"
 
 # download and replace framework
 
-echo "\nDownloading file from URL:https://rzp-mobile.s3.amazonaws.com/ios/checkout/$IOS_NEW_RELEASE_VERSION/RazorpayBitcodeX9.framework.zip"
-wget https://rzp-mobile.s3.amazonaws.com/ios/checkout/"$IOS_NEW_RELEASE_VERSION"/RazorpayBitcodeX9.framework.zip
-unzip RazorpayBitcodeX9.framework.zip
+echo "\nDownloading file from URL:https://rzp-mobile.s3.amazonaws.com/ios/checkout/$IOS_NEW_RELEASE_VERSION/RazorpayBitcodeX10.framework.zip"
+wget https://rzp-mobile.s3.amazonaws.com/ios/checkout/"$IOS_NEW_RELEASE_VERSION"/RazorpayBitcodeX10.framework.zip
+unzip RazorpayBitcodeX10.framework.zip
 cp -R Razorpay.framework ./src/ios/
    # r for recursive i.e for directories , f makes rm consider a success if the file it is trying to delete is not found , as in the
    # of __MACOSX - a macos dependant file which is generated only when unzipped from iOS 11 zips and not from iOS 8
