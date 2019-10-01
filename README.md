@@ -37,7 +37,7 @@ Please add the line
 ```
 # import <Razorpay/Razorpay-Swift.h>
 ```
-to the top of your Main.m file
+to the top of your Main.h file
 
 ## Integration code
 
