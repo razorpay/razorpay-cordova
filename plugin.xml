@@ -25,7 +25,7 @@
         <param name="android-package" value="com.razorpay.cordova.Main"/>
       </feature>
     </config-file>
-    <framework src="com.razorpay:checkout:1.5.8"/>
+    <framework src="com.razorpay:checkout:1.5.12"/>
     <source-file src="src/android/Main.java" target-dir="src/com/razorpay/cordova/"/>
   </platform>
 
