@@ -1,5 +1,5 @@
 #import <Cordova/CDV.h>
-#import <Razorpay/Razorpay.h>
+#import <Razorpay/Razorpay-Swift.h>
 
 @interface Main : CDVPlugin
 
