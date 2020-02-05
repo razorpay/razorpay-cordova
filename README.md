@@ -162,3 +162,7 @@ var onResume = function(event) {
 ```
 
 - Due to the way ionic works, we can't support `ionic serve` at the moment. Try using `ionic run browser` instead of `ionic serve`. `ionic serve` doesn't support cordova browser plugins at the moment. See [driftyco/ionic-cli#354](https://github.com/driftyco/ionic-cli/issues/354).
+
+## FAQ
+
+If you are still not able to integrate, then go to [FAQ](https://github.com/razorpay/razorpay-cordova/wiki/FAQ).
