@@ -31,15 +31,16 @@
 
   <!-- iOS -->
   <platform name="ios">
-      <config-file target="config.xml" parent="/widget">
+      <config-file target="config.xml" parent="/*">
           <feature name="Checkout">
               <param name="ios-package" value="Main" />
           </feature>
       </config-file>
-
-      <header-file src="src/ios/Main.h" target-dir="Razorpay"/>
-      <source-file src="src/ios/Main.m" target-dir="Razorpay"/>
-      <framework src="src/ios/Razorpay.framework" custom="true" />
+      <dependency id="cordova-plugin-cocoapod-support"/>
+      <pods-config ios-min-version="10.0" use-frameworks="true"/>
+      <header-file src="src/ios/Main.h"/>
+      <source-file src="src/ios/Main.m"/>
+      <pod name="razorpay-pod" spec="~> 1.1.4"/>
       <framework src="CoreTelephony.framework" />
       <framework src="SystemConfiguration.framework" />
   </platform>
