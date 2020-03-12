@@ -8,7 +8,12 @@ Official Cordova/Phonegap plugin for integrating Razorpay's checkout.
 - iOS
 - Browser
 
-You can check out the sample apps for cordova, ionic1 & ionic2 in https://github.com/razorpay/razorpay-cordova-sample-app
+You can check out the sample apps for:- 
+* [Cordova v9.0](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-cordova-example)
+* [ionic1](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-ionic1-example)
+* [ionic2](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-ionic2-example)
+* [ionic3](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-ionic3-example)
+* [ionic5](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-ionic5-example)
 
 ## Usage:
 
@@ -19,7 +24,7 @@ Install the plugin
 ```bash
 cd your-project-folder
 cordova platform add android      # optional
-cordova platform add ios          # optional
+cordova platform add ios          # make sure your ios version is ios@5 or latest.
 cordova platform add browser      # optional
 cordova plugin add com.razorpay.cordova --save
 
