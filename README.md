@@ -28,7 +28,7 @@ cordova plugin add com.razorpay.cordova --save
 
 **Note**: Make sure that you set Always Embed Swift Standard Libraries of your main target to yes. 
 
-**Note**: Remember to enable bitcode on your iOS project. We supports Xcode 11+ versions. 
+**Note**: Remember to enable bitcode on your iOS project. We support Xcode 11+ versions. 
 
 ## Integration code
 
