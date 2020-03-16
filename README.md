@@ -13,7 +13,7 @@ You can check out the sample apps for:-
 * [ionic1](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-ionic1-example)
 * [ionic2](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-ionic2-example)
 * [ionic3](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-ionic3-example)
-* [ionic5](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-ionic5-example)
+* [ionic5](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-ionic-5-example)
 
 ## Usage:
 
