@@ -26,10 +26,10 @@ cd your-project-folder
 cordova platform add android      # optional
 cordova platform add ios          # make sure your ios version is ios@5 or latest.
 cordova platform add browser      # optional
-cordova plugin add com.razorpay.cordova --save
+cordova plugin add https://github.com/razorpay/razorpay-cordova.git --save
 
 ```
-(or, `phonegap plugin add com.razorpay.cordova --save`)
+(or, `phonegap plugin add https://github.com/razorpay/razorpay-cordova.git --save`)
 
 **Note**: Make sure that you set Always Embed Swift Standard Libraries of your main target to yes. 
 
