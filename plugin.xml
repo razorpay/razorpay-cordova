@@ -40,7 +40,7 @@
       <pods-config ios-min-version="10.0" use-frameworks="true"/>
       <header-file src="src/ios/Main.h"/>
       <source-file src="src/ios/Main.m"/>
-      <pod name="razorpay-pod" spec="~> 1.1.4"/>
+      <pod name="razorpay-pod"/>
       <framework src="CoreTelephony.framework" />
       <framework src="SystemConfiguration.framework" />
   </platform>
