@@ -1,5 +1,7 @@
 #import "Main.h"
 
+typedef RazorpayCheckout Razorpay;
+
 @interface Main () <RazorpayPaymentCompletionProtocolWithData, ExternalWalletSelectionProtocol> {
   Razorpay *razorpay;
 }
@@ -21,7 +23,11 @@
   [razorpay setExternalWalletSelectionDelegate:self];
 
   self.callbackId = [command callbackId];
-  [razorpay open:options];
+  NSMutableDictionary * tempOptions = [[NSMutableDictionary alloc] initWithDictionary:options];
+  tempOptions[@"integration_version"] = CDV_VERSION;
+  tempOptions[@"integration"] = @"cordova";
+  tempOptions[@"FRAMEWORK"] = @"cordova";
+  [razorpay open:tempOptions];
 }
 
 - (void)onPaymentError:(int)code
