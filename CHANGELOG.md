@@ -1,5 +1,20 @@
 # Changelog
 
+[Full Changelog](https://github.com/razorpay/razorpay-cordova/compare/v1.4.10...v1.4.11)
+
+## [v1.4.11](https://github.com/razorpay/razorpay-cordova/tree/v1.4.11) (2020-06-01)
+
+**Closed issues:**
+
+- Razorpay payment page not opening on android release mode in ionic  [\#114](https://github.com/razorpay/razorpay-cordova/issues/114)
+- Deprecated Methods  [\#113](https://github.com/razorpay/razorpay-cordova/issues/113)
+
+[Full Changelog](https://github.com/razorpay/razorpay-cordova/compare/v1.4.10...v1.4.11)
+
+**Merged pull requests:**
+
+- Updated package version. [\#132](https://github.com/razorpay/razorpay-cordova/pull/132) ([Nautiyalsachin](https://github.com/Nautiyalsachin))
+
 ## [v1.4.10](https://github.com/razorpay/razorpay-cordova/tree/v1.4.10) (2020-04-03)
 
 [Full Changelog](https://github.com/razorpay/razorpay-cordova/compare/v1.4.6...v1.4.10)
@@ -11,7 +26,6 @@
 
 **Merged pull requests:**
 
-- Added typedef for RazorpayCheckout. [\#131](https://github.com/razorpay/razorpay-cordova/pull/131) ([Nautiyalsachin](https://github.com/Nautiyalsachin))
 - removed cocoa pods specific version. [\#129](https://github.com/razorpay/razorpay-cordova/pull/129) ([Nautiyalsachin](https://github.com/Nautiyalsachin))
 - updated Cordova package to GitHub link. [\#127](https://github.com/razorpay/razorpay-cordova/pull/127) ([Nautiyalsachin](https://github.com/Nautiyalsachin))
 - Update ionic 5 sample kit link [\#126](https://github.com/razorpay/razorpay-cordova/pull/126) ([Mayur-Wadpalliwar](https://github.com/Mayur-Wadpalliwar))
@@ -45,6 +59,7 @@
 
 **Merged pull requests:**
 
+- Added typedef for RazorpayCheckout. [\#131](https://github.com/razorpay/razorpay-cordova/pull/131) ([Nautiyalsachin](https://github.com/Nautiyalsachin))
 - iOS Release 1.4.3 [\#94](https://github.com/razorpay/razorpay-cordova/pull/94) ([iThink32](https://github.com/iThink32))
 
 ## [v1.4.3](https://github.com/razorpay/razorpay-cordova/tree/v1.4.3) (2019-02-11)
