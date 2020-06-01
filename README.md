@@ -1,5 +1,9 @@
 # Cordova/Phonegap bindings for Razorpay's Mobile SDKs
 
+[![NPM Version](http://img.shields.io/npm/v/com.razorpay.cordova.svg?style=flat)](https://www.npmjs.com/package/com.razorpay.cordova)
+[![NPM Downloads](https://img.shields.io/npm/dm/com.razorpay.cordova.svg?style=flat)](https://npmcharts.com/compare/com.razorpay.cordova?minimal=true)
+[![Install Size](https://packagephobia.now.sh/badge?p=com.razorpay.cordova)](https://packagephobia.now.sh/result?p=com.razorpay.cordova)
+
 Official Cordova/Phonegap plugin for integrating Razorpay's checkout.
 
 ## Supported platforms
@@ -169,3 +173,7 @@ var onResume = function(event) {
 ## FAQ
 
 If you are still not able to integrate, then go to [FAQ](https://github.com/razorpay/razorpay-cordova/wiki/FAQ).
+
+## Note
+
+We don't support capacitor because of the app support dependency, for more details go through [this link](https://capacitor.ionicframework.com/docs/getting-started/dependencies#ios-development).
