@@ -50,8 +50,7 @@ typedef RazorpayCheckout Razorpay;
   [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
 }
 
-- (void)onExternalWalletSelected:(nonnull NSString *)walletName
-                 WithPaymentData:(nullable NSDictionary *)paymentData {
+- (void)onExternalWalletSelected:(NSString * _Nonnull)walletName withPaymentData:(NSDictionary * _Nullable)paymentData {
   CDVPluginResult *result = [CDVPluginResult
          resultWithStatus:CDVCommandStatus_ERROR
       messageAsDictionary:[NSDictionary dictionaryWithObjectsAndKeys:
