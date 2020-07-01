@@ -54,11 +54,6 @@ var options = {
   order_id: 'order_7HtFNLS98dSj8x',
   amount: '5000',
   name: 'foo',
-  prefill: {
-    email: 'pranav@razorpay.com',
-    contact: '8879524924',
-    name: 'Pranav Gupta'
-  },
   theme: {
     color: '#F37254'
   }
