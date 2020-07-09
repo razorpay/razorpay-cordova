@@ -6,6 +6,16 @@
 
 Official Cordova/Phonegap plugin for integrating Razorpay's checkout.
 
+* [Supported platforms](#supported-platforms)
+* [Prerequisites](#prerequisites)
+* [Usage](#usage)
+* [Integration code](#integration-code)
+* [External Wallets](#external-wallets)
+* [Example App](https://github.com/razorpay/razorpay-cordova-sample-app)
+* [Android Lifecycle Guide](#android-lifecycle-guide)
+* [Notes](#things-to-be-taken-care)
+* [FAQ's](#faq)
+
 ## Supported platforms
 
 - Android
@@ -19,6 +29,11 @@ You can check out the sample apps for:-
 * [ionic3](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-ionic3-example)
 * [ionic5](https://github.com/razorpay/razorpay-cordova-sample-app/tree/master/rzp-ionic-5-example)
 
+## Prerequisites
+
+ - Learn about the <a href="/docs/payment-gateway/payment-flow/" target="_blank">Razorpay Payment Flow</a>.
+ - Sign up for a <a href="https://dashboard.razorpay.com/#/access/signin">Razorpay Account</a> and generate the <a href="https://razorpay.com/docs/payment-gateway/dashboard-guide/settings/#api-keys/" target="_blank">API Keys</a> from the Razorpay Dashboard. Using the Test keys helps simulate a sandbox environment. No actual monetary transaction happens when using the Test keys. Use Live keys once you have thoroughly tested the application and are ready to go live.
+ 
 ## Usage:
 
 Install the plugin
@@ -50,7 +65,7 @@ var options = {
   description: 'Credits towards consultation',
   image: 'https://i.imgur.com/3g7nmJC.png',
   currency: 'INR',
-  key: 'rzp_test_1DP5mmOlF5G5ag',
+  key: '', // your api key.
   order_id: 'order_7HtFNLS98dSj8x',
   amount: '5000',
   name: 'foo',
@@ -83,7 +98,7 @@ To add a wallet, change the `options` JSON as follows:
 ```js
 var options = {
   currency: 'INR',
-  key: 'rzp_test_1DP5mmOlF5G5ag',
+  key: '',
   amount: '5000',
   external: {
     wallets: ['paytm']
@@ -108,7 +123,7 @@ var options = {
   description: 'Credits towards consultation',
   image: 'https://i.imgur.com/3g7nmJC.png',
   currency: 'INR',
-  key: 'rzp_test_1DP5mmOlF5G5ag',
+  key: '',
   amount: '5000',
   name: 'foo',
   theme: {
