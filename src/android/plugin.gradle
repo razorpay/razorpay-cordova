@@ -10,5 +10,5 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.rzp:checkout-test:1.0.0'
+    implementation 'com.rzp:checkout-test:1.0.+'
 }
