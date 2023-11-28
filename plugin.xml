@@ -26,8 +26,12 @@
       </feature>
     </config-file>
 <!--      <framework src="src/android/plugin.gradle" custom="true" type="gradleReference"/>-->
-    <framework src="com.razorpay:checkout:1.6.19"/>
-    <source-file src="src/android/Main.java" target-dir="src/com/razorpay/cordova/"/>
+        <source-file src="src/android/Main.java" target-dir="src/com/razorpay/cordova/"/>
+        <source-file src="src/android/CordovaTurbo.java" target-dir="src/com/razorpay/cordova/"/>
+<!--      <lib-file src="src/android/libs/checkout-uat-091123-1027.aar"/>-->
+        <framework src="src/android/razorpay.gradle" custom="true" type="gradleReference" />
+        <resource-file src="checkoutSDK/checkout-uat-091123-1027.aar" target="libs/checkout-uat-091123-1027.aar" />
+
   </platform>
 
   <!-- iOS -->
