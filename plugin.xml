@@ -31,6 +31,11 @@
 <!--      <lib-file src="src/android/libs/checkout-uat-091123-1027.aar"/>-->
         <framework src="src/android/razorpay.gradle" custom="true" type="gradleReference" />
         <resource-file src="checkoutSDK/checkout-uat-091123-1027.aar" target="libs/checkout-uat-091123-1027.aar" />
+        <resource-file src="turboSDKs/olive-0408231650.aar" target="libs/olive-0408231650.aar" />
+        <resource-file src="turboSDKs/razorpay-turbo-wrapper-uat-241123-1859.aar" target="libs/razorpay-turbo-wrapper-uat-241123-1859.aar" />
+        <resource-file src="turboSDKs/SecureComponent-release-signed_UAT_14072022_e64f899a.aar" target="libs/SecureComponent-release-signed_UAT_14072022_e64f899a.aar" />
+        <resource-file src="turboSDKs/upi-psp-sdk-debug.aar" target="libs/upi-psp-sdk-debug.aar" />
+        <resource-file src="turboSDKs/upi-turbo-view-debug.aar" target="libs/upi-turbo-view-debug.aar" />
 
   </platform>
 

@@ -25,8 +25,8 @@ var upiTurbo = module.exports = {
 
 var RazorpayCheckout = module.exports = {
     upiTurbo,
-    initUpiTurbo: function (){
-        cordova.exec(null, null, 'Checkout', 'initUpiTurbo',[])
+    initUpiTurbo: function (key){
+        cordova.exec(null, null, 'Checkout', 'initUpiTurbo',[key])
     },
 
     open: function (options, successCallback, errorCallback) {

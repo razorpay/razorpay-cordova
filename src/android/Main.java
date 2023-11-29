@@ -45,7 +45,9 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                 break;
             }
             case "initUpiTurbo":{
-                cordovaTurbo = new CordovaTurbo(this.cordova.getActivity());
+                Log.i("MAINLOGS", "key is : "+data.getString(0));
+                cordovaTurbo = new CordovaTurbo(this.cordova.getActivity(), data.getString(0));
+                Log.i("MAINLOGS", "cordovaTurbo.setKeyID() is called successfully");
                 break;
             }
             case "linkNewUpiAccount": {
