@@ -7,11 +7,6 @@ repositories{
 
 dependencies {
     implementation(name:'checkout-uat-091123-1027', ext:'aar')
-    implementation(name:'olive-0408231650', ext:'aar')
-    implementation(name:'SecureComponent-release-signed_UAT_14072022_e64f899a', ext:'aar')
-    implementation(name:'upi-psp-sdk-debug', ext:'aar')
-    implementation(name:'upi-turbo-view-debug', ext:'aar')
-    implementation(name:'razorpay-turbo-wrapper-uat-241123-1859', ext:'aar')
 }
 
 android {
