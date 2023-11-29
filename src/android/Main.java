@@ -1,6 +1,5 @@
 package com.razorpay.cordova;
 
-import android.util.Log;
 import com.razorpay.CheckoutActivity;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultWithDataListener;
@@ -13,12 +12,14 @@ import org.json.JSONException;
 import android.widget.Toast;
 import android.os.Bundle;
 import android.content.Intent;
-import android.app.Activity;
 
 
 public class Main extends CordovaPlugin implements PaymentResultWithDataListener, ExternalWalletListener {
     public static final String MAP_KEY_ERROR_CODE = "code";
     public static final String MAP_KEY_ERROR_DESC = "description";
+    public static final String MAP_KEY_ERROR_CODE_UPI = "errorCode";
+    public static final String MAP_KEY_ERROR_DESC_UPI = "errorDescription";
+    public static final String MAP_KEY_ERROR_OBJ = "error";
     public static final String MAP_KEY_CONTACT = "contact";
     public static final String MAP_KEY_EMAIL = "email";
     public static final String MAP_KEY_EXTERNAL_WALLET_NAME = "external_wallet_name";
@@ -38,16 +39,14 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                     cordovaTurbo.setKeyID(data.getString(0));
                 }else{
                     JSONObject tele = new JSONObject();
-                    tele.put("code", "BAD_REQUEST_ERROR");
-                    tele.put("description", "Please initialize UPI Turbo by triggering initTurbo function");
+                    tele.put(MAP_KEY_ERROR_CODE_UPI, "BAD_REQUEST_ERROR");
+                    tele.put(MAP_KEY_ERROR_DESC_UPI, "Please initialize UPI Turbo by triggering initTurbo function");
                     cc.error(tele.toString());
                 }
                 break;
             }
             case "initUpiTurbo":{
-                Log.i("MAINLOGS", "key is : "+data.getString(0));
                 cordovaTurbo = new CordovaTurbo(this.cordova.getActivity(), data.getString(0));
-                Log.i("MAINLOGS", "cordovaTurbo.setKeyID() is called successfully");
                 break;
             }
             case "linkNewUpiAccount": {
@@ -65,8 +64,8 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                     });
                 } else {
                     JSONObject tele = new JSONObject();
-                    tele.put("code", "BAD_REQUEST_ERROR");
-                    tele.put("description", "Please initialize UPI Turbo by triggering initTurbo function");
+                    tele.put(MAP_KEY_ERROR_CODE_UPI, "BAD_REQUEST_ERROR");
+                    tele.put(MAP_KEY_ERROR_DESC_UPI, "Please initialize UPI Turbo by triggering initTurbo function");
                     cc.error(tele.toString());
                 }
                 break;
@@ -75,7 +74,7 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                 if (cordovaTurbo!=null){
                     JSONObject payload = new JSONObject(data.getString(0));
                     payload.put("FRAMEWORK", "cordova");
-                    cordovaTurbo.open(payload);
+                    cordovaTurbo.open(this.cordova.getActivity(), payload);
                 }else{
                     try {
                         Intent intent = new Intent(this.cordova.getActivity(), CheckoutActivity.class);
@@ -93,7 +92,7 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                     cordovaTurbo.manageUpiAccounts(data.getString(0), data.getString(1), new CordovaTurbo.TurboResponseListener() {
                         @Override
                         public void onSuccess(JSONObject data) {
-                            cc.success(data);
+                            /*This callback is never used*/
                         }
 
                         @Override
@@ -103,8 +102,8 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                     });
                 }else{
                     JSONObject tele = new JSONObject();
-                    tele.put("code", "BAD_REQUEST_ERROR");
-                    tele.put("description", "Please initialize UPI Turbo by triggering initTurbo function");
+                    tele.put(MAP_KEY_ERROR_CODE_UPI, "BAD_REQUEST_ERROR");
+                    tele.put(MAP_KEY_ERROR_DESC_UPI, "Please initialize UPI Turbo by triggering initTurbo function");
                     cc.error(tele.toString());
                 }
             }
@@ -143,8 +142,8 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
         if (this.userAction.equalsIgnoreCase("open")) {
             try {
                 JSONObject error = new JSONObject();
-                error.put(MAP_KEY_ERROR_CODE, code);
-                error.put(MAP_KEY_ERROR_DESC, description);
+                error.put(MAP_KEY_ERROR_CODE_UPI, code);
+                error.put(MAP_KEY_ERROR_DESC_UPI, description);
                 error.put(MAP_KEY_CONTACT, paymentData.getUserContact());
                 error.put(MAP_KEY_EMAIL, paymentData.getUserEmail());
                 cc.error(error);

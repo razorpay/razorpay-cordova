@@ -2,7 +2,10 @@ package com.razorpay.cordova;
 
 
 import static com.razorpay.cordova.Main.MAP_KEY_ERROR_CODE;
+import static com.razorpay.cordova.Main.MAP_KEY_ERROR_CODE_UPI;
 import static com.razorpay.cordova.Main.MAP_KEY_ERROR_DESC;
+import static com.razorpay.cordova.Main.MAP_KEY_ERROR_DESC_UPI;
+import static com.razorpay.cordova.Main.MAP_KEY_ERROR_OBJ;
 
 import android.app.Activity;
 import android.util.Log;
@@ -20,9 +23,6 @@ import java.util.List;
 
 public class CordovaTurbo{
 
-    public static final String MAP_KEY_ERROR_CODE_UPI = "errorCode";
-    public static final String MAP_KEY_ERROR_DESC_UPI = "errorDescription";
-
     private final Checkout checkout;
 
     public interface TurboResponseListener{
@@ -31,14 +31,13 @@ public class CordovaTurbo{
     }
 
     public CordovaTurbo(Activity activity, String key){
-        Log.i("CORTURLOGS", "CordovaTurbo is called");
         checkout = new Checkout().upiTurbo(activity);
         setKeyID(key);
     }
 
     public void setKeyID(String key){
         checkout.setKeyID(key);
-        Log.i("CORTURLOGS", "setKeyID is called");
+        Log.i("CORTURLOGS", "setKeyID is called and key is : "+key);
     }
 
     public void linkNewUpiAccount(String customerMobile, String color, TurboResponseListener responseListener){
@@ -46,7 +45,6 @@ public class CordovaTurbo{
             checkout.upiTurbo.linkNewUpiAccount(customerMobile, color, new GenericPluginCallback() {
                 @Override
                 public void onSuccess(@NonNull Object o) {
-                    Log.d("CORTURLOGS","link Success Obj is : "+o);
                     try {
                         JSONObject data = new JSONObject().put("data","linked acc executed successfully");
                         responseListener.onSuccess(data);
@@ -59,8 +57,17 @@ public class CordovaTurbo{
                 public void onError(@NonNull JSONObject jsonObject) {
                     JSONObject error = new JSONObject();
                     try {
-                        error.put(MAP_KEY_ERROR_CODE, error.getString(MAP_KEY_ERROR_CODE_UPI));
-                        error.put(MAP_KEY_ERROR_DESC, error.getString(MAP_KEY_ERROR_DESC_UPI));
+                        if(jsonObject.has(MAP_KEY_ERROR_CODE)){
+                            error.put(MAP_KEY_ERROR_CODE_UPI, jsonObject.getString(MAP_KEY_ERROR_CODE));
+                            error.put(MAP_KEY_ERROR_DESC_UPI, jsonObject.getString(MAP_KEY_ERROR_DESC));
+                        }else if(jsonObject.has(MAP_KEY_ERROR_OBJ)){
+                            JSONObject errObj = jsonObject.getJSONObject(MAP_KEY_ERROR_OBJ);
+                            error.put(MAP_KEY_ERROR_CODE_UPI, errObj.getString(MAP_KEY_ERROR_CODE));
+                            error.put(MAP_KEY_ERROR_DESC_UPI, errObj.getString(MAP_KEY_ERROR_DESC));
+                        }else {
+                            error.put(MAP_KEY_ERROR_CODE_UPI, jsonObject.getString(MAP_KEY_ERROR_CODE_UPI));
+                            error.put(MAP_KEY_ERROR_DESC_UPI, jsonObject.getString(MAP_KEY_ERROR_DESC_UPI));
+                        }
                         responseListener.onError(error);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
@@ -75,15 +82,40 @@ public class CordovaTurbo{
 
     public void manageUpiAccounts(String customerMobile, String color, TurboResponseListener responseListener){
         try{
-            JSONObject data = new JSONObject().put("data",customerMobile);
-            responseListener.onSuccess(data);
+            checkout.upiTurbo.manageUpiAccounts(customerMobile, color, new GenericPluginCallback() {
+                @Override
+                public void onSuccess(@NonNull Object o) {
+                    /*This callback is never used*/
+                }
+
+                @Override
+                public void onError(@NonNull JSONObject jsonObject) {
+                    JSONObject error = new JSONObject();
+                    try {
+                        if(jsonObject.has(MAP_KEY_ERROR_CODE)){
+                            error.put(MAP_KEY_ERROR_CODE_UPI, jsonObject.getString(MAP_KEY_ERROR_CODE));
+                            error.put(MAP_KEY_ERROR_DESC_UPI, jsonObject.getString(MAP_KEY_ERROR_DESC));
+                        }else if(jsonObject.has(MAP_KEY_ERROR_OBJ)){
+                            JSONObject errObj = jsonObject.getJSONObject(MAP_KEY_ERROR_OBJ);
+                            error.put(MAP_KEY_ERROR_CODE_UPI, errObj.getString(MAP_KEY_ERROR_CODE));
+                            error.put(MAP_KEY_ERROR_DESC_UPI, errObj.getString(MAP_KEY_ERROR_DESC));
+                        }else {
+                            error.put(MAP_KEY_ERROR_CODE_UPI, jsonObject.getString(MAP_KEY_ERROR_CODE_UPI));
+                            error.put(MAP_KEY_ERROR_DESC_UPI, jsonObject.getString(MAP_KEY_ERROR_DESC_UPI));
+                        }
+                        responseListener.onError(error);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void open(JSONObject options){
-
+    public void open(Activity activity, JSONObject payload){
+        checkout.open(activity, payload);
     }
-
 }

@@ -17,9 +17,9 @@ var upiTurbo = module.exports = {
         cordova.exec(successCallback, errorCallback, 'Checkout', 'linkNewUpiAccount', [customerMobile, color])
     },
 
-    manageUpiAccount: function(customerMobile, color,successCallback, errorCallBack){
-        cordova.exec(successCallback, errorCallback, 'Checkout', 'manageUpiAccount', [customerMobile, color])
-    }
+    manageUpiAccounts: function(customerMobile, color, errorCallBack){
+            cordova.exec(null, errorCallBack, 'Checkout', 'manageUpiAccount', [customerMobile, color])
+        }
 
 }
 
