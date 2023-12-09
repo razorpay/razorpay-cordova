@@ -1,3 +1,7 @@
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 repositories{
     jcenter()
     flatDir {
@@ -6,10 +10,15 @@ repositories{
 }
 
 dependencies {
-    implementation(name:'checkout-uat-041223-1618', ext:'aar')
+    implementation(name:'checkout-uat-mock', ext:'aar')
 }
 
 android {
+    configurations.all {
+        resolutionStrategy {
+            force 'org.jetbrains.kotlin:kotlin-stdlib:1.7.21'
+        }
+    }
     packagingOptions {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
