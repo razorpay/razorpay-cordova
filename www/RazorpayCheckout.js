@@ -31,10 +31,8 @@ var RazorpayCheckout = module.exports = {
 
     open: function (options, successCallback, errorCallback) {
         if (successCallback) {
-            RazorpayCheckout.callbacks['payment.success'] = function(response) {
-                successCallback(response.razorpay_payment_id);
+            RazorpayCheckout.callbacks['payment.success'] = successCallback;
             }
-        }
 
         if (errorCallback) {
             RazorpayCheckout.callbacks['payment.cancel'] = errorCallback;

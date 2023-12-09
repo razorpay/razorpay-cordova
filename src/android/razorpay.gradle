@@ -6,7 +6,7 @@ repositories{
 }
 
 dependencies {
-    implementation(name:'checkout-uat-091123-1027', ext:'aar')
+    implementation(name:'checkout-uat-041223-1618', ext:'aar')
 }
 
 android {

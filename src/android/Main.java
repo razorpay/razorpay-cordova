@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import android.util.Log;
 import android.widget.Toast;
 import android.os.Bundle;
 import android.content.Intent;
@@ -19,14 +21,16 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
     public static final String MAP_KEY_ERROR_DESC = "description";
     public static final String MAP_KEY_ERROR_CODE_UPI = "errorCode";
     public static final String MAP_KEY_ERROR_DESC_UPI = "errorDescription";
-    public static final String MAP_KEY_ERROR_OBJ = "error";
     public static final String MAP_KEY_CONTACT = "contact";
     public static final String MAP_KEY_EMAIL = "email";
     public static final String MAP_KEY_EXTERNAL_WALLET_NAME = "external_wallet_name";
+    public static final String MSG_BAD_REQUEST_ERROR = "BAD_REQUEST_ERROR";
+    public static final String MSG_INIT_UPI_TURBO = "Please initialize UPI Turbo by triggering initTurbo function";
+    public static final String MSG_FEATURE_NOT_FOUND_ERROR = "FEATURE_NOT_FOUND";
+    public static final String MSG_UPI_TURBO_PLUGIN_NOT_FOUND = "There is no UPI Turbo plugin available. Please contact Razorpay support.";
 
     private String userAction;
     public CallbackContext cc;
-    private Checkout checkout;
     private CordovaTurbo cordovaTurbo;
 
     @Override
@@ -34,26 +38,59 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
         this.cc = callbackContext;
         this.userAction = action;
         switch (action) {
+            case "open": {
+                if(isTurboPluginAvailable() && cordovaTurbo==null){
+                    initializeCordovaTurbo();
+                }
+                try {
+                    Intent intent = new Intent(this.cordova.getActivity(), CheckoutActivity.class);
+                    intent.putExtra("OPTIONS", data.getString(0));
+                    intent.putExtra("FRAMEWORK", "cordova");
+                    this.cordova.startActivityForResult((CordovaPlugin) this, intent, Checkout.RZP_REQUEST_CODE);
+                } catch (Exception e) {
+                    Toast.makeText(this.cordova.getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+
+            /**
+             * Need to discuss weather we need to keep this setKeyID case or not
+             * */
             case "setKeyID":{
                 if (cordovaTurbo != null){
                     cordovaTurbo.setKeyID(data.getString(0));
                 }else{
-                    JSONObject tele = new JSONObject();
-                    tele.put(MAP_KEY_ERROR_CODE_UPI, "BAD_REQUEST_ERROR");
-                    tele.put(MAP_KEY_ERROR_DESC_UPI, "Please initialize UPI Turbo by triggering initTurbo function");
-                    cc.error(tele.toString());
+                    JSONObject init_error_obj = new JSONObject();
+                    init_error_obj.put(MAP_KEY_ERROR_CODE_UPI, MSG_BAD_REQUEST_ERROR);
+                    init_error_obj.put(MAP_KEY_ERROR_DESC_UPI, MSG_INIT_UPI_TURBO);
+                    cc.error(init_error_obj.toString());
                 }
                 break;
             }
+
             case "initUpiTurbo":{
-                cordovaTurbo = new CordovaTurbo(this.cordova.getActivity(), data.getString(0));
+                if(!isTurboPluginAvailable()){
+                    triggerUPITurboNotAvailableError();
+                    break;
+                }
+
+                if(cordovaTurbo==null){
+                    initializeCordovaTurbo();
+                }
+                cordovaTurbo.setKeyID(data.getString(0));
                 break;
             }
+
             case "linkNewUpiAccount": {
-                if (cordovaTurbo != null){
+                if(!isTurboPluginAvailable()){
+                    triggerUPITurboNotAvailableError();
+                    break;
+                }
+
+                if (cordovaTurbo != null && cordovaTurbo.isKeyIDSet()){
                     cordovaTurbo.linkNewUpiAccount(data.getString(0), data.getString(1), new CordovaTurbo.TurboResponseListener() {
                         @Override
-                        public void onSuccess(JSONObject data) {
+                        public void onSuccess(String data) {
                             cc.success(data);
                         }
 
@@ -63,35 +100,24 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                         }
                     });
                 } else {
-                    JSONObject tele = new JSONObject();
-                    tele.put(MAP_KEY_ERROR_CODE_UPI, "BAD_REQUEST_ERROR");
-                    tele.put(MAP_KEY_ERROR_DESC_UPI, "Please initialize UPI Turbo by triggering initTurbo function");
-                    cc.error(tele.toString());
+                    JSONObject init_error_obj = new JSONObject();
+                    init_error_obj.put(MAP_KEY_ERROR_CODE_UPI, MSG_BAD_REQUEST_ERROR);
+                    init_error_obj.put(MAP_KEY_ERROR_DESC_UPI, MSG_INIT_UPI_TURBO);
+                    cc.error(init_error_obj.toString());
                 }
                 break;
             }
-            case "open": {
-                if (cordovaTurbo!=null){
-                    JSONObject payload = new JSONObject(data.getString(0));
-                    payload.put("FRAMEWORK", "cordova");
-                    cordovaTurbo.open(this.cordova.getActivity(), payload);
-                }else{
-                    try {
-                        Intent intent = new Intent(this.cordova.getActivity(), CheckoutActivity.class);
-                        intent.putExtra("OPTIONS", data.getString(0));
-                        intent.putExtra("FRAMEWORK", "cordova");
-                        this.cordova.startActivityForResult((CordovaPlugin) this, intent, Checkout.RZP_REQUEST_CODE);
-                    } catch (Exception e) {
-                        Toast.makeText(this.cordova.getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-                break;
-            }
+
             case "manageUpiAccount": {
-                if (cordovaTurbo != null){
+                if(!isTurboPluginAvailable()){
+                    triggerUPITurboNotAvailableError();
+                    break;
+                }
+
+                if (cordovaTurbo != null && cordovaTurbo.isKeyIDSet()){
                     cordovaTurbo.manageUpiAccounts(data.getString(0), data.getString(1), new CordovaTurbo.TurboResponseListener() {
                         @Override
-                        public void onSuccess(JSONObject data) {
+                        public void onSuccess(String data) {
                             /*This callback is never used*/
                         }
 
@@ -101,10 +127,10 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                         }
                     });
                 }else{
-                    JSONObject tele = new JSONObject();
-                    tele.put(MAP_KEY_ERROR_CODE_UPI, "BAD_REQUEST_ERROR");
-                    tele.put(MAP_KEY_ERROR_DESC_UPI, "Please initialize UPI Turbo by triggering initTurbo function");
-                    cc.error(tele.toString());
+                    JSONObject init_error_obj = new JSONObject();
+                    init_error_obj.put(MAP_KEY_ERROR_CODE_UPI, MSG_BAD_REQUEST_ERROR);
+                    init_error_obj.put(MAP_KEY_ERROR_DESC_UPI, MSG_INIT_UPI_TURBO);
+                    cc.error(init_error_obj.toString());
                 }
             }
         }
@@ -127,13 +153,37 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Checkout.handleActivityResult(this.cordova.getActivity(), requestCode, resultCode, intent, this, this);
+        if(isTurboPluginAvailable()){
+            cordovaTurbo.onMerchantActivityResult(this.cordova.getActivity(), requestCode, resultCode, intent, this, this);
+        }else {
+            /**
+             * Deprecated but used for Non-Turbo Checkout SDK
+             * */
+            Checkout.handleActivityResult(this.cordova.getActivity(), requestCode, resultCode, intent, this, this);
+        }
     }
 
     @Override
     public void onPaymentSuccess(String razorpayPaymentId, PaymentData paymentData) {
         if (this.userAction.equalsIgnoreCase("open")) {
-            cc.success(paymentData.getData());
+            JSONObject response = new JSONObject();
+            try {
+                response.put("razorpay_payment_id", paymentData.getPaymentId());
+                response.put("razorpay_user_contact", paymentData.getOrderId());
+                response.put("razorpay_user_email", paymentData.getOrderId());
+
+                /**
+                 * These will come in production mode
+                 * */
+                //response.putOpt("razorpay_order_id", paymentData.getOrderId());
+                //response.putOpt("razorpay_signature", paymentData.getSignature());
+            } catch (JSONException e) {
+                /**
+                 * Intentionally kept empty to allow the triggering of success callback
+                 * even in cases of getting other keys in response
+                 * */
+            }
+            cc.success(response);
         }
     }
 
@@ -142,12 +192,18 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
         if (this.userAction.equalsIgnoreCase("open")) {
             try {
                 JSONObject error = new JSONObject();
-                error.put(MAP_KEY_ERROR_CODE_UPI, code);
-                error.put(MAP_KEY_ERROR_DESC_UPI, description);
+                if(isTurboPluginAvailable()){
+                    error.put(MAP_KEY_ERROR_CODE_UPI, code);
+                    error.put(MAP_KEY_ERROR_DESC_UPI, description);
+                }else {
+                    error.put(MAP_KEY_ERROR_CODE, code);
+                    error.put(MAP_KEY_ERROR_DESC, description);
+                }
                 error.put(MAP_KEY_CONTACT, paymentData.getUserContact());
                 error.put(MAP_KEY_EMAIL, paymentData.getUserEmail());
                 cc.error(error);
             } catch (Exception e) {
+                Log.d("Exception", "onPaymentError Exception: "+e.getMessage());
             }
         }
     }
@@ -162,7 +218,50 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                 response.put(MAP_KEY_CONTACT, paymentData.getUserContact());
                 cc.error(response);
             } catch (Exception e) {
+                Log.d("Exception", "onExternalWalletSelected Exception: "+e.getMessage());
             }
+        }
+    }
+
+    private void initializeCordovaTurbo(){
+        if(cordovaTurbo==null){
+            cordovaTurbo = new CordovaTurbo(this.cordova.getActivity());
+        }
+    }
+
+    private boolean isTurboPluginAvailable() {
+        try {
+            /**
+             * Class found, which indicates turbo plugin exists
+             */
+            Class.forName("com.razorpay.UpiTurboLinkAccountResultListener");
+            return true;
+        } catch (ClassNotFoundException e) {
+            /**
+             * Class not found, so it doesn't exist
+             */
+            return false;
+        }
+    }
+
+    private void triggerUPITurboNotAvailableError(){
+        JSONObject init_error_obj = new JSONObject();
+        try {
+            init_error_obj.put(MAP_KEY_ERROR_CODE_UPI, MSG_FEATURE_NOT_FOUND_ERROR);
+            init_error_obj.put(MAP_KEY_ERROR_DESC_UPI, MSG_UPI_TURBO_PLUGIN_NOT_FOUND);
+            cc.error(init_error_obj.toString());
+        } catch (JSONException e) {
+            /**
+             * This block will only execute when CallbackContext is null
+             * */
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(cordovaTurbo!=null){
+            cordovaTurbo.destroyCheckout();
         }
     }
 }
