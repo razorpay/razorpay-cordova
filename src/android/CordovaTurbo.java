@@ -49,10 +49,6 @@ public class CordovaTurbo{
         isKeyIDSet=true;
     }
 
-    public boolean isKeyIDSet(){
-        return isKeyIDSet;
-    }
-
     public void onMerchantActivityResult(Activity activity, int requestCode, int resultCode, Intent data, PaymentResultWithDataListener listener, ExternalWalletListener externalWalletListener){
         checkout.merchantActivityResult(activity, requestCode, resultCode, data, listener, externalWalletListener);
     }

@@ -1,7 +1,7 @@
 /*global cordova, module*/
 
 var upiTurbo = module.exports = {
-    getLinkedUpiAccounts : function(customerMobile, successCallback, errorCallback){
+    /*getLinkedUpiAccounts : function(customerMobile, successCallback, errorCallback){
         cordova.exec(
             successCallback,
             errorCallback,
@@ -11,7 +11,7 @@ var upiTurbo = module.exports = {
                 customerMobile
             ]
         )
-    },
+    },*/
 
     linkNewUpiAccount: function (customerMobile, color, successCallback, errorCallback){
         cordova.exec(successCallback, errorCallback, 'Checkout', 'linkNewUpiAccount', [customerMobile, color])
@@ -56,7 +56,7 @@ var RazorpayCheckout = module.exports = {
         else if('external_wallet_name' in response){
             RazorpayCheckout.callbacks['payment.external_wallet'](response);
         }
-        else if('code' in response){
+        else if('code' in response || 'errorCode' in response){
             RazorpayCheckout.callbacks['payment.cancel'](response);
         }
     },
