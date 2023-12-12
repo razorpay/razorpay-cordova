@@ -39,24 +39,30 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
         this.userAction = action;
         switch (action) {
             case "open": {
-                if(isTurboPluginAvailable() && cordovaTurbo==null){
-                    initializeCordovaTurbo();
-                }
-                try {
-                    Intent intent = new Intent(this.cordova.getActivity(), CheckoutActivity.class);
-                    intent.putExtra("OPTIONS", data.getString(0));
-                    intent.putExtra("FRAMEWORK", "cordova");
-                    this.cordova.startActivityForResult((CordovaPlugin) this, intent, Checkout.RZP_REQUEST_CODE);
-                } catch (Exception e) {
-                    Toast.makeText(this.cordova.getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                /**
+                 * If Turbo plugin is not available then it consider as standard checkout without Turbo feature
+                 * otherwise it will prompt user to use init() before checkout
+                 * */
+                if (isTurboPluginAvailable() && cordovaTurbo == null) {
+                    triggerUPITurboInitError();
+                } else {
+                    try {
+                        Intent intent = new Intent(this.cordova.getActivity(), CheckoutActivity.class);
+                        intent.putExtra("OPTIONS", data.getString(0));
+                        intent.putExtra("FRAMEWORK", "cordova");
+                        this.cordova.startActivityForResult((CordovaPlugin) this, intent, Checkout.RZP_REQUEST_CODE);
+                    } catch (Exception e) {
+                        Toast.makeText(this.cordova.getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 }
                 break;
             }
 
             /**
              * Need to discuss weather we need to keep this setKeyID case or not
+             * Commenting this case until further discussion
              * */
-            case "setKeyID":{
+           /* case "setKeyID":{
                 if (cordovaTurbo != null){
                     cordovaTurbo.setKeyID(data.getString(0));
                 }else{
@@ -66,7 +72,7 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                     cc.error(init_error_obj.toString());
                 }
                 break;
-            }
+            }*/
 
             case "initUpiTurbo":{
                 if(!isTurboPluginAvailable()){
@@ -75,9 +81,8 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                 }
 
                 if(cordovaTurbo==null){
-                    initializeCordovaTurbo();
+                    initializeCordovaTurbo(data.getString(0));
                 }
-                cordovaTurbo.setKeyID(data.getString(0));
                 break;
             }
 
@@ -87,7 +92,7 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                     break;
                 }
 
-                if (cordovaTurbo != null && cordovaTurbo.isKeyIDSet()){
+                if (cordovaTurbo != null){
                     cordovaTurbo.linkNewUpiAccount(data.getString(0), data.getString(1), new CordovaTurbo.TurboResponseListener() {
                         @Override
                         public void onSuccess(String data) {
@@ -100,10 +105,7 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                         }
                     });
                 } else {
-                    JSONObject init_error_obj = new JSONObject();
-                    init_error_obj.put(MAP_KEY_ERROR_CODE_UPI, MSG_BAD_REQUEST_ERROR);
-                    init_error_obj.put(MAP_KEY_ERROR_DESC_UPI, MSG_INIT_UPI_TURBO);
-                    cc.error(init_error_obj.toString());
+                    triggerUPITurboInitError();
                 }
                 break;
             }
@@ -114,7 +116,7 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                     break;
                 }
 
-                if (cordovaTurbo != null && cordovaTurbo.isKeyIDSet()){
+                if (cordovaTurbo != null){
                     cordovaTurbo.manageUpiAccounts(data.getString(0), data.getString(1), new CordovaTurbo.TurboResponseListener() {
                         @Override
                         public void onSuccess(String data) {
@@ -127,10 +129,7 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
                         }
                     });
                 }else{
-                    JSONObject init_error_obj = new JSONObject();
-                    init_error_obj.put(MAP_KEY_ERROR_CODE_UPI, MSG_BAD_REQUEST_ERROR);
-                    init_error_obj.put(MAP_KEY_ERROR_DESC_UPI, MSG_INIT_UPI_TURBO);
-                    cc.error(init_error_obj.toString());
+                    triggerUPITurboInitError();
                 }
             }
         }
@@ -223,9 +222,10 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
         }
     }
 
-    private void initializeCordovaTurbo(){
+    private void initializeCordovaTurbo(String merchantKey){
         if(cordovaTurbo==null){
             cordovaTurbo = new CordovaTurbo(this.cordova.getActivity());
+            cordovaTurbo.setKeyID(merchantKey);
         }
     }
 
@@ -249,7 +249,20 @@ public class Main extends CordovaPlugin implements PaymentResultWithDataListener
         try {
             init_error_obj.put(MAP_KEY_ERROR_CODE_UPI, MSG_FEATURE_NOT_FOUND_ERROR);
             init_error_obj.put(MAP_KEY_ERROR_DESC_UPI, MSG_UPI_TURBO_PLUGIN_NOT_FOUND);
-            cc.error(init_error_obj.toString());
+            cc.error(init_error_obj);
+        } catch (JSONException e) {
+            /**
+             * This block will only execute when CallbackContext is null
+             * */
+        }
+    }
+
+    private void triggerUPITurboInitError(){
+        JSONObject init_error_obj = new JSONObject();
+        try {
+            init_error_obj.put(MAP_KEY_ERROR_CODE_UPI, MSG_BAD_REQUEST_ERROR);
+            init_error_obj.put(MAP_KEY_ERROR_DESC_UPI, MSG_INIT_UPI_TURBO);
+            cc.error(init_error_obj);
         } catch (JSONException e) {
             /**
              * This block will only execute when CallbackContext is null
