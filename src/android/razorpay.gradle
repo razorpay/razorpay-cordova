@@ -10,7 +10,7 @@ repositories{
 }
 
 dependencies {
-    implementation(name:'checkout-uat-mock', ext:'aar')
+    implementation(name:'checkout-uat-181223-1853', ext:'aar')
 }
 
 android {
