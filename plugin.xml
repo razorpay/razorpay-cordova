@@ -29,7 +29,7 @@
         <source-file src="src/android/Main.java" target-dir="src/com/razorpay/cordova/"/>
         <source-file src="src/android/CordovaTurbo.java" target-dir="src/com/razorpay/cordova/"/>
         <framework src="src/android/razorpay.gradle" custom="true" type="gradleReference" />
-        <resource-file src="checkoutSDK/checkout-uat-041223-1618.aar" target="libs/checkout-uat-041223-1618.aar" />
+        <resource-file src="checkoutSDK/checkout-uat-181223-1853.aar" target="libs/checkout-uat-181223-1853.aar" />
   </platform>
 
   <!-- iOS -->
