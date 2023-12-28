@@ -4,13 +4,10 @@ apply plugin: 'kotlin-kapt'
 
 repositories{
     jcenter()
-    flatDir {
-        dirs 'src/main/libs'
-    }
 }
 
 dependencies {
-    implementation(name:'checkout-uat-181223-1853', ext:'aar')
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
 }
 
 android {
