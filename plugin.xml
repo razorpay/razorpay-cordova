@@ -37,13 +37,16 @@
               <param name="ios-package" value="Main" />
           </feature>
       </config-file>
-      <dependency id="cordova-plugin-cocoapod-support"/>
-      <pods-config ios-min-version="10.0" use-frameworks="true"/>
       <header-file src="src/ios/Main.h"/>
       <source-file src="src/ios/Main.m"/>
-      <pod name="razorpay-pod"/>
-      <framework src="CoreTelephony.framework" />
-      <framework src="SystemConfiguration.framework" />
+      <podspec>
+        <config>
+          <source url="https://github.com/CocoaPods/specs.git"/>
+        </config>
+        <pods use-frameworks="true">
+          <pod name="razorpay-pod"/>
+        </pods>
+      </podspec>
   </platform>
 
   <!-- Browser -->
