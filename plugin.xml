@@ -44,7 +44,9 @@
           <source url="https://github.com/CocoaPods/specs.git"/>
         </config>
         <pods use-frameworks="true">
-          <pod name="razorpay-pod"/>
+          <!-- Cap the major version so a future SDK re-modularisation cannot break
+               the Objective-C bridge at pod install time. -->
+          <pod name="razorpay-pod" spec=">= 1.4.7, &lt; 2.0.0"/>
         </pods>
       </podspec>
   </platform>
